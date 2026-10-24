@@ -1,0 +1,84 @@
+# Pages CMS (https://pagescms.org): the editor for tolgworks.co.
+# Sign in with GitHub, open this repository, and "Updates" appears as a list with a form for each entry.
+# Saving commits to GitHub, and Cloudflare Pages rebuilds the site in about a minute.
+media:
+  input: public/media
+  output: /media
+
+content:
+  - name: updates
+    label: Updates
+    type: collection
+    path: src/content/updates
+    filename: "{primary}.md"
+    view:
+      fields: [title, date, types, featured, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: shortTitle, label: Short title for the Home card, type: string, description: "Optional. Used when the title is long, e.g. SIGraDi 2025." }
+      - { name: subtitle, label: Subtitle, type: string }
+      - { name: date, label: Date, type: date, required: true, description: "Start date. Used for ordering." }
+      - name: showDate
+        label: Show date as
+        type: select
+        default: month
+        options:
+          values:
+            - { value: day, label: "Day (3 Jun 2026)" }
+            - { value: month, label: "Month (Jun 2026)" }
+            - { value: year, label: "Year (2026)" }
+      - { name: endDate, label: End date, type: date, description: "Optional, for exhibitions or workshops over several days." }
+      - name: types
+        label: Type
+        type: select
+        required: true
+        options:
+          multiple: true
+          values: [Installation, Exhibition, Conference, Publication, Workshop, Seminar, Talk, Jury]
+      - { name: keywords, label: Keywords, type: string, list: true }
+      - { name: venue, label: Venue, type: string, required: true }
+      - { name: city, label: "City, country", type: string }
+      - { name: organiser, label: Organiser or institution, type: string }
+      - { name: role, label: My role, type: string, required: true }
+      - name: collaborators
+        label: Collaborators
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: role, label: Role, type: string }
+          - { name: link, label: Link, type: string }
+      - { name: summary, label: Summary, type: text, description: "One or two sentences. Lead paragraph on the page and text on the Home card." }
+      - name: images
+        label: Images
+        description: "The first image is the cover: hover preview on lists and the card on Home."
+        type: object
+        list: true
+        fields:
+          - { name: src, label: Image, type: image, required: true }
+          - { name: caption, label: Caption, type: string }
+          - { name: credit, label: Photo credit, type: string }
+          - { name: alt, label: Description for screen readers, type: string }
+      - name: videos
+        label: Videos (Vimeo or YouTube links)
+        type: object
+        list: true
+        fields:
+          - { name: url, label: Link, type: string, required: true }
+          - { name: caption, label: Caption, type: string }
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Label, type: string, required: true, description: "e.g. DOI, PDF, Festival page" }
+          - { name: url, label: Address, type: string, required: true }
+      - { name: featured, label: Featured on Home, type: boolean, default: false }
+      - { name: featuredOrder, label: Featured order, type: number, description: "1 shows first." }
+      - { name: draft, label: Draft (hidden from the site), type: boolean, default: false }
+      - { name: body, label: Text, type: rich-text }

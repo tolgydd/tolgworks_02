@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="Contact" page="contact">
+  <section class="wrap contact">
+    <div class="contact-grid">
+      <div>
+        <h1 class="contact-h">Let's work<br>together.</h1>
+        <p class="contact-lead">Open to collaborations on installations, research and teaching: workshops, studio juries, conference panels and spatial or sound-based projects.</p>
+      </div>
+      <dl class="contact-list">
+        <div><dt class="mono">// email</dt><dd><button class="email" id="email" aria-label="Copy email address">{SITE.email}</button><span class="mono mute copyhint">click to copy</span></dd></div>
+        <div><dt class="mono">// based in</dt><dd>Istanbul, Türkiye <span class="mono mute" id="ctime"></span></dd></div>
+        <div><dt class="mono">// elsewhere</dt><dd class="links mono">{SITE.links.map(l => <a href={l.url} target="_blank" rel="noopener">{l.label}</a>)}</dd></div>
+        <div><dt class="mono">// cv</dt><dd><a href="/cv/" class="mono">View the full CV</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>

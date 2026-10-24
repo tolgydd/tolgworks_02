@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { SITE } from '../site';
+
+interface Props { title?: string; description?: string; page?: 'home' | 'updates' | 'cv' | 'contact'; image?: string }
+const { title, description = SITE.description, page, image } = Astro.props;
+const fullTitle = title ? `${title} / ${SITE.domain}` : `${SITE.title} / ${SITE.domain}`;
+const nav = [
+  { href: '/', label: 'Home', key: 'home' },
+  { href: '/updates/', label: 'Updates', key: 'updates' },
+  { href: '/cv/', label: 'CV', key: 'cv' },
+  { href: '/contact/', label: 'Contact', key: 'contact' },
+];
+const ogImage = new URL(image || '/img/portrait.jpg', Astro.site).href;
+---
+<!doctype html>
+<html lang="en" data-accent={SITE.defaultAccent}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#171716">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/affogato-400.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="/fonts/affogato-700.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap">
+  <script is:inline>
+    // apply the remembered highlight colour before first paint
+    try { const a = localStorage.getItem('accent'); if (a) document.documentElement.dataset.accent = a; } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="reticle" aria-hidden="true"><span class="mono" id="ret-xy">x 0000 y 0000</span></div>
+  <figure id="peek" aria-hidden="true">
+    <div class="crop"><i class="c3"></i><i class="c4"></i><div class="frame"><img id="peek-img" alt=""></div></div>
+    <div class="cap"><span class="mono" id="peek-id">IMG</span><span class="bars"></span></div>
+  </figure>
+  <div id="toast" class="mono" role="status" aria-live="polite"></div>
+
+  <header>
+    <div class="bar wrap">
+      <a class="mark" href="/">tolgworks<span class="dot">.co</span></a>
+      <nav aria-label="Main">
+        {nav.map(n => <a href={n.href} aria-current={page === n.key ? 'page' : undefined}>{n.label}</a>)}
+      </nav>
+      <div class="swatches" role="group" aria-label="Highlight colour">
+        <span class="mono mute">hl</span>
+        <button class="sw" data-c="citrus" aria-label="Citrus Core" title="Citrus Core"></button>
+        <button class="sw" data-c="lime" aria-label="Lime Twist" title="Lime Twist"></button>
+        <button class="sw" data-c="lemon" aria-label="Lemon Zest" title="Lemon Zest"></button>
+      </div>
+    </div>
+  </header>
+
+  <main lang="en">
+    <slot />
+  </main>
+
+  <footer class="wrap mono mute">
+    <span>© {new Date().getFullYear()} Tolga Aydoğdu</span>
+    <span>{SITE.domain}</span>
+  </footer>
+
+  <script>
+    import '../scripts/site';
+  </script>
+</body>
+</html>

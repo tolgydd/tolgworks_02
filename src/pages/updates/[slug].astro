@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { getUpdates, formatRange, place, embedUrl } from '../../lib/updates';
+
+export async function getStaticPaths() {
+  const updates = await getUpdates();
+  return updates.map((u, i) => ({ params: { slug: u.id }, props: { u, newer: updates[i - 1], older: updates[i + 1] } }));
+}
+const { u, newer, older } = Astro.props;
+const d = u.data;
+const { Content } = await render(u);
+const [first, ...rest] = d.images;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Base title={d.title} page="updates" description={d.summary || `${d.title}${d.subtitle ? ': ' + d.subtitle : ''}. ${place(u)}.`} image={first?.src}>
+  <section class="wrap"><article class="post">
+    <a class="back mono" href="/updates/">&larr; All updates</a>
+    <div class="post-head">
+      <div class="kicker mono"><b>No. {u.n}</b><span>{formatRange(u)}</span><span>{d.types.join(' / ')}</span>{d.featured && <b>Featured</b>}</div>
+      <h1 class:list={['post-h', { long: d.title.length > 28 }]}>{d.title}</h1>
+      {d.subtitle && <p class="post-sub">{d.subtitle}</p>}
+    </div>
+    {first && (
+      <figure class="post-cover">
+        <div class="frame"><img alt={first.alt || `${d.title}, cover image`} src={first.src}></div>
+        {(first.caption || first.credit) && <figcaption class="mono"><span>fig. 01{first.caption && ` / ${first.caption}`}</span>{first.credit && <span>photo: {first.credit}</span>}</figcaption>}
+      </figure>
+    )}
+    <div class="post-layout">
+      <dl class="post-meta">
+        <div><dt>Date</dt><dd>{formatRange(u)}</dd></div>
+        <div><dt>Location</dt><dd>{d.venue}{d.city && <small>{d.city}</small>}</dd></div>
+        {d.organiser && <div><dt>Organiser</dt><dd>{d.organiser}</dd></div>}
+        <div><dt>My role</dt><dd>{d.role}</dd></div>
+        {d.collaborators.length > 0 && (
+          <div><dt>With</dt><dd><ul class="collab">
+            {d.collaborators.map(c => <li>{c.link ? <a href={c.link} target="_blank" rel="noopener">{c.name}</a> : c.name}{c.role && <small>{c.role}</small>}</li>)}
+          </ul></dd></div>
+        )}
+        <div><dt>Type</dt><dd><span class="tags">{d.types.map(t => <a class="tag" href={`/updates/?tag=${t.toLowerCase()}`}>{t}</a>)}</span></dd></div>
+        {d.keywords.length > 0 && <div><dt>Keywords</dt><dd>{d.keywords.join(', ')}</dd></div>}
+        {d.links.length > 0 && <div><dt>Links</dt><dd><span class="lnk">{d.links.map(l => <a href={l.url} target="_blank" rel="noopener">{l.label} &nearr;</a>)}</span></dd></div>}
+      </dl>
+      <div class="post-body">
+        {d.summary && <p class="lead">{d.summary}</p>}
+        <div class="prose"><Content /></div>
+        {d.videos.map(v => (
+          <figure style="margin:0">
+            <div class="embed"><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+            {v.caption && <figcaption class="mono"><span>{v.caption}</span></figcaption>}
+          </figure>
+        ))}
+        {rest.length > 0 && (
+          <div class="gallery">
+            {rest.map((im, j) => (
+              <figure>
+                <div class="frame"><img alt={im.alt || ''} loading="lazy" src={im.src}></div>
+                <figcaption class="mono"><span>fig. {pad(j + 2)}{im.caption && ` / ${im.caption}`}</span>{im.credit && <span>photo: {im.credit}</span>}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+    <nav class="post-nav" aria-label="More updates">
+      {newer ? <a href={`/updates/${newer.id}/`}><span>&larr; Newer / {formatRange(newer)}</span><span>{newer.data.title}</span></a> : <span></span>}
+      {older && <a class="next" href={`/updates/${older.id}/`}><span>Older / {formatRange(older)} &rarr;</span><span>{older.data.title}</span></a>}
+    </nav>
+  </article></section>
+</Base>

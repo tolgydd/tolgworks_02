@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+// The CV is written here by hand. After editing it, run `npm run cv-pdf` to refresh the downloadable PDF.
+const updated = 'Oct 2026';
+---
+<Base title="CV" page="cv" description="Academic CV of Tolga Aydoğdu: education, publications, conferences, installations and teaching.">
+  <section class="wrap">
+    <div class="cv-top">
+      <div>
+        <h1>Tolga Aydoğdu</h1>
+        <p class="cv-sub mono">Architect / Interior architect / Illustrator · Istanbul, Türkiye · tolgydd@gmail.com</p>
+      </div>
+      <div class="btns"><a class="btn primary" href="/tolga-aydogdu-cv.pdf" download style="text-decoration:none">Download PDF</a><button class="btn" id="print" type="button">Print</button></div>
+    </div>
+    <div class="cv-layout">
+      <nav class="cv-index mono" aria-label="CV sections">
+        <a href="#cv-edu" data-cv="edu">Education</a>
+        <a href="#cv-res" data-cv="res">Research interests</a>
+        <a href="#cv-pub" data-cv="pub">Publications</a>
+        <a href="#cv-conf" data-cv="conf">Conferences</a>
+        <a href="#cv-inst" data-cv="inst">Installations</a>
+        <a href="#cv-teach" data-cv="teach">Teaching</a>
+        <a href="#cv-skills" data-cv="skills">Skills</a>
+        <a href="#cv-lang" data-cv="lang">Languages</a>
+        <span class="cv-updated">Updated {updated}</span>
+      </nav>
+      <div class="cv-body">
+        <section class="cv-block" id="cv-edu"><h2>Education</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">2025–</span><div><b>M.A. History and Theory of Architecture</b><p>Istanbul Bilgi University. GPA 4.00 / 4.00. Provisional thesis: <i>A Space That Listens Back: Sonic Resonance, Immersion, and the Reconfiguration of Perception</i>. Supervisor: Dr. Elif Kendir Beraha.</p></div></div>
+          <div class="cv-item"><span class="mono">2016–2021</span><div><b>B.Arch., Double Major in Architecture</b><p>Istanbul Technical University. GPA 3.30 / 4.00.</p></div></div>
+          <div class="cv-item"><span class="mono">2013–2019</span><div><b>B.I.A., Interior Architecture</b><p>Istanbul Technical University.</p></div></div>
+          <div class="cv-item"><span class="mono">2016–2017</span><div><b>Erasmus Exchange, Architecture</b><p>Politechnika Gdańska, Poland.</p></div></div>
+        </div></section>
+        <section class="cv-block" id="cv-res"><h2>Research interests</h2><div class="cv-items">
+          <p class="cv-prose">Architectural theory and spatial epistemologies; immersive and immaterial spatial environments; multisensory perception and embodiment in architecture; experimental spatial design practices bridging theory, media and built experience; interdisciplinary approaches to representation, atmosphere and spatial cognition.</p>
+        </div></section>
+        <section class="cv-block" id="cv-pub"><h2>Publications</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">2025</span><div><b>An immersive space design through the material and the immaterial: Toward a multisensory spatial experience</b><p>Uçkan, B., Atukeren, A., <u>Aydoğdu, T.</u>, &amp; Gürer, E. Paper presented at SIGraDi 2025, XXVII International Conference of the Ibero-American Society of Digital Graphics, Córdoba, Argentina, 19–21 November 2025.</p></div></div>
+          <div class="cv-item"><span class="mono">2025</span><div><b>Architecture as Ritualistic Apparatus: A Reading of Bruder Klaus Chapel</b><p>Aydoğdu, T. Manuscript prepared for journal submission.</p></div></div>
+        </div></section>
+        <section class="cv-block" id="cv-conf"><h2>Conferences</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">Nov 2025</span><div><b>SIGraDi 2025</b><p>XXVII International Conference of the Ibero-American Society of Digital Graphics, Córdoba, Argentina.</p></div></div>
+        </div></section>
+        <section class="cv-block" id="cv-inst"><h2>Installations</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">Jun 2026</span><div><b>KHORA, immersive neuro-responsive spatial installation</b><p>Istanbul Digital Art Festival (IDAF), Atatürk Cultural Center (AKM), Istanbul, 3–7 June 2026. Investigates embodied perception through sound, media and responsive spatial systems; EEG and heart-rate data act as live inputs that reshape the participant's perceptual relation to the environment.</p></div></div>
+          <div class="cv-item"><span class="mono">2025</span><div><b>AION, interactive generative spatial installation</b><p>International Architecture Biennial of Antalya (IABA). Generative visual systems projected onto architectural surfaces, enriched through sound design and user interaction; the visitor becomes an active agent in a continuously evolving environment.</p></div></div>
+        </div></section>
+        <section class="cv-block" id="cv-teach"><h2>Teaching and academic engagement</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">2016–</span><div><b>Guest critic in architectural studio juries</b><p>More than 20 juries across multiple institutions, contributing to design reviews, conceptual discussions and student feedback.</p></div></div>
+          <div class="cv-item"><span class="mono">Oct 2022</span><div><b>Invited seminar: Space as Stream-of-Consciousness: Architecture Tracing the Narrative</b><p>FMV Işık University.</p></div></div>
+          <div class="cv-item"><span class="mono">2016–2023</span><div><b>Co-led workshops and studio-based experimental sessions</b>
+            <ul class="cv-list">
+              <li><span class="mono">2023</span>LimitedStructured II, FMV Işık University Arch. Foundation Studio II</li>
+              <li><span class="mono">2022</span>LimitedStructured, FMV Işık University Arch. Foundation Studio II</li>
+              <li><span class="mono">2022</span>Translative.Fictions, ITU Architectural Project Studio II</li>
+              <li><span class="mono">2022</span>İliş-im-ler W3, UMÖB 20,5, Denizli</li>
+              <li><span class="mono">2021</span>İliş-im-ler LAB1, MEF University FADA Workshop Week</li>
+              <li><span class="mono">2021</span>İliş-im-ler W2, PUPA, Gebze</li>
+              <li><span class="mono">2019</span>İliş-im-ler W1, UMÖB 19, Istanbul</li>
+              <li><span class="mono">2019</span>R.A.M. Karaköy, ITU Architectural Project Studio IV</li>
+              <li><span class="mono">2019</span>Deneysel Anı Toplayıcıları, UMÖB 18, Mardin</li>
+              <li><span class="mono">2016</span>Jane's Walk Gdańsk, architectural city tours</li>
+            </ul></div></div>
+        </div></section>
+        <section class="cv-block" id="cv-skills"><h2>Research and technical skills</h2><div class="cv-items">
+          <p class="cv-prose">Practice-based research through spatial installations and media environments; development of immersive architectural experiments integrating projection mapping, sound design and interactive systems; exploration of biofeedback and neuro-responsive inputs as spatial design parameters; interdisciplinary methods bridging theoretical inquiry with material and immaterial spatial production; communicating research through visual, diagrammatic and experiential formats.</p>
+        </div></section>
+        <section class="cv-block" id="cv-lang"><h2>Languages</h2><div class="cv-items">
+          <div class="cv-item"><span class="mono">Native</span><div><b>Turkish</b></div></div>
+          <div class="cv-item"><span class="mono">Advanced</span><div><b>English</b><p>Academic proficiency, YÖKDİL 97.5 / 100.</p></div></div>
+        </div></section>
+        <p class="cv-foot mono">References available upon request.</p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import Row from '../components/Row.astro';
+import { getUpdates, cover } from '../lib/updates';
+
+const updates = await getUpdates();
+// featured works are picked in the editor with the Featured switch, ordered by featuredOrder
+const featured = updates.filter(u => u.data.featured).sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Base page="home">
+  <div class="hero">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="rail mono" aria-hidden="true"><span>Architecture / Narrative</span><span>Multisensory space</span><span>41.0082 N 28.9784 E</span></div>
+    <div class="hero-inner wrap">
+      <div>
+        <h1 class="name"><span class="l1" data-scramble>Tolga</span><span class="l2" data-scramble>Aydoğdu</span></h1>
+        <div class="role mono"><span>Architect</span><span>Interior architect</span><span>Illustrator</span></div>
+        <p class="bio">Working on architectural narrative and multisensory spatial experience. Currently an MA candidate in History and Theory of Architecture at Istanbul Bilgi University, with a thesis on sonic resonance, immersion and perception. Recent installations: AION at the Antalya Architecture Biennial and KHORA at the Istanbul Digital Art Festival.</p>
+        <div class="areas">
+          <h2>Research areas</h2>
+          <ul>
+            <li>Architectural theory</li><li>Spatial epistemologies</li><li>Immersive and immaterial environments</li><li>Multisensory perception</li><li>Embodiment</li><li>Atmosphere and spatial cognition</li><li>Experimental spatial design</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="portrait" style="margin:0">
+        <div class="crop"><i class="c3"></i><i class="c4"></i>
+          <div class="frame"><img alt="Portrait of Tolga Aydoğdu" src="/img/portrait.jpg" width="720" height="759"></div>
+          <span class="ticks" aria-hidden="true"></span>
+        </div>
+        <figcaption class="mono mute"><span>fig. 00 / portrait</span><span>480 × 535</span></figcaption>
+      </figure>
+    </div>
+    <div class="readouts wrap mono mute">
+      <span>signal <b id="clock">--:--:--</b> TRT</span>
+      <span>dust <b id="pcount">0</b> particles</span><span class="hide-sm">click the field to send a pulse</span>
+      <span>cursor <b id="hxy">x 0000 y 0000</b></span>
+    </div>
+  </div>
+
+  {featured.length > 0 && (
+    <div class="section wrap">
+      <div class="slabel"><h2>Selected works</h2><span class="mono mute">{pad(featured.length)} featured</span></div>
+      <div class="works">
+        {featured.map((w, i) => {
+          const img = cover(w);
+          return (
+            <a class="work" href={`/updates/${w.id}/`}>
+              <div class="crop"><i class="c3"></i><i class="c4"></i>
+                <div class="frame">
+                  {img && <img alt={img.alt || `${w.data.title}, cover image`} src={img.src} loading="lazy">}
+                  <span class="scan"></span><span class="hx"></span><span class="hy"></span>
+                  <span class="idx">{pad(i + 1)}</span><span class="badge mono">{w.data.date.getUTCFullYear()}</span><span class="hud mono">x 0.00 y 0.00</span>
+                </div>
+              </div>
+              <div class="meta"><h3>{w.data.shortTitle || w.data.title}</h3><span class="mono mute">{w.data.types[0].toLowerCase()}</span></div>
+              <p>{w.data.venue}{w.data.city && `, ${w.data.city.split(',')[0]}`} / {w.data.role}</p>
+              {w.data.summary && <p class="wd">{w.data.summary}</p>}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  )}
+
+  <div class="section wrap col" style={featured.length ? 'padding-top:0' : undefined}>
+    <div class="slabel"><h2>Latest updates</h2><a class="mono" href="/updates/">All updates ({updates.length})</a></div>
+    <ol class="list">
+      {updates.slice(0, 5).map(u => <Row u={u} />)}
+    </ol>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/hero';
+</script>

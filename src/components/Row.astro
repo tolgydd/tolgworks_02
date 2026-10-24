@@ -1,0 +1,12 @@
+---
+import { formatRange, cover, place, type NumberedUpdate } from '../lib/updates';
+interface Props { u: NumberedUpdate }
+const { u } = Astro.props;
+const img = cover(u);
+---
+<li class="row" data-tags={u.data.types.join('|')} data-img={img?.src} data-cap={img && `IMG ${u.n} / ${formatRange(u).toUpperCase()}`}>
+  <span class="no mono">{u.n}.</span>
+  <span class="date mono">{formatRange(u)}</span>
+  <span class="title"><a href={`/updates/${u.id}/`}>{u.data.title}{u.data.subtitle && <span class="sub">: {u.data.subtitle}</span>}</a><span class="place">{place(u)}<span class="rl"> / {u.data.role}</span></span></span>
+  <span class="tags">{u.data.types.map(t => <span class="tag">{t}</span>)}</span>
+</li>
