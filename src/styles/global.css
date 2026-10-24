@@ -35,9 +35,11 @@ body {
   margin: 0; background: var(--ink); color: var(--paper);
   font-family: var(--body); font-weight: 400; font-size: 16px; line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  background-image: url("/img/bg.jpg");
-  /* shown at its own pixel size so the 1px grid stays sharp; only scales up on screens wider than the image */
-  background-size: max(2048px, 100vw, 100vh); background-position: center; background-attachment: fixed;
+  /* a seamless 24-cell crop of the grid, repeated and drawn pixel for pixel (1:1 on retina, exact half on 1x),
+     so the 1px lines never get stretched by an odd amount, on any screen size */
+  background-image: url("/img/bg-tile.jpg");
+  background-image: image-set(url("/img/bg-tile.webp") type("image/webp") 1x, url("/img/bg-tile@2x.webp") type("image/webp") 2x, url("/img/bg-tile.jpg") 1x, url("/img/bg-tile@2x.jpg") 2x);
+  background-size: 708px 708px; background-repeat: repeat; background-position: center top; background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
 }
