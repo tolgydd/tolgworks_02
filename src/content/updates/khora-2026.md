@@ -68,24 +68,15 @@ Ultimately, KHORA invites participants to reconsider the boundaries between body
 
 
 
-*Where presuppositions are suspended,*
-
-*how far can a space extend-*
-
-*a dynamic, continuous,*
-
+*Where presuppositions are suspended,*\
+*how far can a space extend-*\
+*a dynamic, continuous,*\
 *ever-emergent field?*
 
-
-
-*What other states might it become-*
-
-*a space formed by the body within,*
-
-*densely pulsing,*
-
-*expanding through its presence,*
-
+*What other states might it become-*\
+*a space formed by the body within,*\
+*densely pulsing,*\
+*expanding through its presence,*\
 *coming alive.*
 
 
