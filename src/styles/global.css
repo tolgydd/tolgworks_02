@@ -234,7 +234,17 @@ p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 .chip:hover { border-color: var(--mute); }
 .chip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .chip sup { font-size: 9px; margin-left: 3px; opacity: .7; }
+.freset { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 6px 4px; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.freset[hidden], .row[hidden], .pager[hidden] { display: none; }
 .empty { padding: 40px 0; color: var(--mute); }
+.pager { display: flex; flex-wrap: wrap; gap: 6px; max-width: 900px; margin-top: 28px; }
+.pager button {
+  font-family: var(--mono); font-size: 12px; background: transparent; color: var(--paper); font-variant-numeric: tabular-nums;
+  border: 1px solid var(--rule); padding: 6px 11px; cursor: pointer; transition: background .2s, color .2s, border-color .2s;
+}
+.pager button:hover:not(:disabled) { border-color: var(--accent); }
+.pager button[aria-current="page"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.pager button:disabled { opacity: .35; cursor: default; }
 
 /* ---------- cv ---------- */
 .cv-top { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; padding-block: 48px 28px; border-bottom: 1px solid var(--rule); }

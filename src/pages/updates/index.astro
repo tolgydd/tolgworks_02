@@ -5,21 +5,23 @@ import { getUpdates } from '../../lib/updates';
 import { TYPES } from '../../content.config';
 
 const updates = await getUpdates();
-const counts: Record<string, number> = { All: updates.length };
+const counts: Record<string, number> = {};
 updates.forEach(u => u.data.types.forEach(t => (counts[t] = (counts[t] || 0) + 1)));
-const tags = ['All', ...TYPES.filter(t => counts[t])];
+const tags = TYPES.filter(t => counts[t]);
 ---
 <Base title="Updates" page="updates" description="Installations, exhibitions, publications, conferences, seminars and workshops by Tolga Aydoğdu, newest first.">
   <section class="wrap updates-page"><div class="col">
     <h1 class="big" data-scramble data-final="Updates">Updates<span class="stop">.</span><span class="count" id="ucount">{String(updates.length).padStart(2, '0')}</span></h1>
     <div class="filters" role="group" aria-label="Filter by type" id="filters">
       <span class="mono mute">filter</span>
-      {tags.map(t => <button class="chip" type="button" data-tag={t} aria-pressed={String(t === 'All')}>{t}<sup>{counts[t]}</sup></button>)}
+      {tags.map(t => <button class="chip" type="button" data-tag={t} aria-pressed="false">{t}<sup>{counts[t]}</sup></button>)}
+      <button class="freset mono" type="button" id="freset" hidden>&times; reset</button>
     </div>
     <ol class="list" id="ulist">
       {updates.map(u => <Row u={u} />)}
     </ol>
-    <p class="empty mono" id="uempty" hidden>No entries with this tag yet.</p>
+    <p class="empty mono" id="uempty" hidden>No entries with these tags yet.</p>
+    <nav class="pager mono" id="pager" aria-label="Pages" hidden></nav>
     <div style="height:64px"></div>
   </div></section>
 </Base>

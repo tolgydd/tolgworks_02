@@ -57,22 +57,50 @@ document.querySelectorAll<HTMLElement>('.work .frame').forEach(f => {
   f.addEventListener('pointerleave', () => { f.style.setProperty('--mx', '0'); f.style.setProperty('--my', '0'); });
 });
 
-/* ---------- updates filter ---------- */
+/* ---------- updates filter (several types at once) + pages of 15 ---------- */
 const filters = $('#filters');
 if (filters) {
+  const PER = 15;
   const rows = [...document.querySelectorAll<HTMLElement>('#ulist .row')];
-  const show = (tag: string) => {
-    let n = 0;
-    rows.forEach(r => { const on = tag === 'All' || r.dataset.tags!.split('|').includes(tag); r.hidden = !on; if (on) n++; });
-    $('#ucount')!.textContent = String(n).padStart(2, '0');
-    $('#uempty')!.hidden = n > 0;
-    filters.querySelectorAll<HTMLElement>('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.tag === tag)));
-    try { history.replaceState(null, '', tag === 'All' ? location.pathname : '?tag=' + encodeURIComponent(tag.toLowerCase())); } catch (e) {}
+  const chips = [...filters.querySelectorAll<HTMLElement>('.chip[data-tag]')];
+  const pager = $('#pager')!, reset = $('#freset')!;
+  const on = new Set<string>();
+  let page = 1;
+  const render = (scroll = false) => {
+    const hits = rows.filter(r => !on.size || r.dataset.tags!.split('|').some(t => on.has(t)));
+    const pages = Math.max(1, Math.ceil(hits.length / PER));
+    page = Math.min(Math.max(1, page), pages);
+    const shown = new Set(hits.slice((page - 1) * PER, page * PER));
+    rows.forEach(r => (r.hidden = !shown.has(r)));
+    $('#ucount')!.textContent = String(hits.length).padStart(2, '0');
+    $('#uempty')!.hidden = hits.length > 0;
+    chips.forEach(c => c.setAttribute('aria-pressed', String(on.has(c.dataset.tag!))));
+    reset.hidden = !on.size;
+    pager.hidden = pages < 2;
+    pager.innerHTML = pages < 2 ? '' :
+      `<button type="button" data-page="${page - 1}" ${page === 1 ? 'disabled' : ''}>&larr; prev</button>` +
+      Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i + 1}" ${i + 1 === page ? 'aria-current="page"' : ''}>${String(i + 1).padStart(2, '0')}</button>`).join('') +
+      `<button type="button" data-page="${page + 1}" ${page === pages ? 'disabled' : ''}>next &rarr;</button>`;
+    const q = new URLSearchParams();
+    if (on.size) q.set('tag', [...on].map(t => t.toLowerCase()).join(','));
+    if (page > 1) q.set('page', String(page));
+    try { history.replaceState(null, '', location.pathname + (q.size ? '?' + q.toString().replace(/%2C/g, ',') : '')); } catch (e) {}
+    if (scroll) filters.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   };
-  filters.addEventListener('click', e => { const b = (e.target as Element).closest<HTMLElement>('.chip'); if (b) show(b.dataset.tag!); });
-  const q = new URLSearchParams(location.search).get('tag');
-  const match = q && [...filters.querySelectorAll<HTMLElement>('.chip')].find(c => c.dataset.tag!.toLowerCase() === q);
-  if (match) show(match.dataset.tag!);
+  filters.addEventListener('click', e => {
+    const b = (e.target as Element).closest<HTMLElement>('button');
+    if (!b) return;
+    if (b === reset) on.clear(); else { const t = b.dataset.tag!; on.has(t) ? on.delete(t) : on.add(t); }
+    page = 1; render();
+  });
+  pager.addEventListener('click', e => {
+    const b = (e.target as Element).closest<HTMLButtonElement>('button[data-page]');
+    if (b && !b.disabled) { page = +b.dataset.page!; render(true); }
+  });
+  const params = new URLSearchParams(location.search);
+  (params.get('tag') || '').split(',').forEach(q => { const c = chips.find(c => c.dataset.tag!.toLowerCase() === q.trim()); if (c) on.add(c.dataset.tag!); });
+  page = parseInt(params.get('page') || '1', 10) || 1;
+  render();
 }
 
 /* ---------- CV: jump to a section, mark the one in view, print ---------- */
