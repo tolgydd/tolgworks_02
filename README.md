@@ -30,6 +30,6 @@ npm run dev      # http://localhost:4321
 npm run build    # output in dist/
 ```
 
-## Cloudflare Pages settings
+## Cloudflare settings
 
-Framework preset: Astro. Build command: `npm run build`. Output directory: `dist`. Environment variable `NODE_VERSION` = `22`.
+Workers & Pages → Create → Import a repository → `tolgworks_02`. Build command: `npm run build`. Deploy command: `npx wrangler deploy` (reads `wrangler.jsonc`). Then add `tolgworks.co` under the project's Domains.
