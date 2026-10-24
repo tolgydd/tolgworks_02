@@ -83,3 +83,18 @@ Ultimately, KHORA invites participants to reconsider the boundaries between body
 
 *coming alive.*
 
+
+
+&nbsp;
+
+&nbsp;
+
+**Support Team:** Doruk Sivri, Sevinç Şimşir, Sinan Ayaz, Gaye Arda, İzlem Acar
+
+**Advisors:** Doğu Yıldırım, Ayşe Hale Kenar, Tülay Karakaş
+
+**Sound Design Collaboration:** Audio Rituals - Immersive Audio Labs
+
+**Supporting Institutions:** Istanbul Medipol University, Faculty of Fine Arts, Design and Architecture, Istanbul Technical University, Architectural Design Computing Program, TOUCH Event, FOCAL
+
+**Photography:** Burhan Canlı, Merve Yumuk, IDAF Çekim Ekibi, Griyer
