@@ -81,4 +81,4 @@ content:
       - { name: featured, label: Featured on Home, type: boolean, default: false }
       - { name: featuredOrder, label: Featured order, type: number, description: "1 shows first." }
       - { name: draft, label: Draft (hidden from the site), type: boolean, default: false }
-      - { name: body, label: Text, type: rich-text }
+      - { name: body, label: Text, type: rich-text, description: "To put an image or video between paragraphs, write [[image 3]] or [[video 1]] on a line of its own. The number is its place in the Images or Videos list above (image 1 is the cover). Anything not placed this way stays where it is now: the cover on top, videos and the other images at the bottom." }

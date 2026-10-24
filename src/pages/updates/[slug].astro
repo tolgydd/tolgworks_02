@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { render } from 'astro:content';
-import { getUpdates, formatRange, place, embedUrl } from '../../lib/updates';
+import { getUpdates, formatRange, place, embedUrl, placeMedia, figLabel } from '../../lib/updates';
 
 export async function getStaticPaths() {
   const updates = await getUpdates();
@@ -10,8 +10,12 @@ export async function getStaticPaths() {
 const { u, newer, older } = Astro.props;
 const d = u.data;
 const { Content } = await render(u);
-const [first, ...rest] = d.images;
-const pad = (n: number) => String(n).padStart(2, '0');
+// images and videos the text places itself ([[image 3]], [[video 1]]) are left out of their default spots
+const placed = placeMedia(u);
+const first = d.images[0];
+const cover = placed.images.has(1) ? undefined : first;
+const rest = d.images.map((im, i) => ({ im, n: i + 1 })).filter(x => x.n > 1 && !placed.images.has(x.n));
+const videos = d.videos.filter((_, i) => !placed.videos.has(i + 1));
 ---
 <Base title={d.title} page="updates" description={d.summary || `${d.title}${d.subtitle ? ': ' + d.subtitle : ''}. ${place(u)}.`} image={first?.src}>
   <section class="wrap"><article class="post">
@@ -21,10 +25,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <h1 class:list={['post-h', { long: d.title.length > 28 }]}>{d.title}</h1>
       {d.subtitle && <p class="post-sub">{d.subtitle}</p>}
     </div>
-    {first && (
+    {cover && (
       <figure class="post-cover">
-        <div class="frame"><img alt={first.alt || `${d.title}, cover image`} src={first.src}></div>
-        {(first.caption || first.credit) && <figcaption class="mono"><span>fig. 01{first.caption && ` / ${first.caption}`}</span>{first.credit && <span>photo: {first.credit}</span>}</figcaption>}
+        <div class="frame"><img alt={cover.alt || `${d.title}, cover image`} src={cover.src}></div>
+        {(cover.caption || cover.credit) && <figcaption class="mono"><span>{figLabel(cover, 1)}</span>{cover.credit && <span>photo: {cover.credit}</span>}</figcaption>}
       </figure>
     )}
     <div class="post-layout">
@@ -44,8 +48,8 @@ const pad = (n: number) => String(n).padStart(2, '0');
       </dl>
       <div class="post-body">
         {d.summary && <p class="lead">{d.summary}</p>}
-        <div class="prose"><Content /></div>
-        {d.videos.map(v => (
+        {u.rendered ? <div class="prose" set:html={placed.html} /> : <div class="prose"><Content /></div>}
+        {videos.map(v => (
           <figure style="margin:0">
             <div class="embed"><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
             {v.caption && <figcaption class="mono"><span>{v.caption}</span></figcaption>}
@@ -53,10 +57,10 @@ const pad = (n: number) => String(n).padStart(2, '0');
         ))}
         {rest.length > 0 && (
           <div class="gallery">
-            {rest.map((im, j) => (
+            {rest.map(({ im, n }) => (
               <figure>
                 <div class="frame"><img alt={im.alt || ''} loading="lazy" src={im.src}></div>
-                <figcaption class="mono"><span>fig. {pad(j + 2)}{im.caption && ` / ${im.caption}`}</span>{im.credit && <span>photo: {im.credit}</span>}</figcaption>
+                <figcaption class="mono"><span>{figLabel(im, n)}</span>{im.credit && <span>photo: {im.credit}</span>}</figcaption>
               </figure>
             ))}
           </div>
@@ -68,4 +72,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
       {older && <a class="next" href={`/updates/${older.id}/`}><span>Older / {formatRange(older)} &rarr;</span><span>{older.data.title}</span></a>}
     </nav>
   </article></section>
+  <dialog class="lb" id="lb" aria-label="Image viewer">
+    <img id="lb-img" alt="" draggable="false">
+    <div class="lb-bar mono"><span id="lb-cap"></span><span id="lb-n"></span></div>
+    <button class="lb-btn lb-x mono" type="button" aria-label="Close">close &times;</button>
+    <button class="lb-btn lb-prev mono" type="button" aria-label="Previous image">&larr;</button>
+    <button class="lb-btn lb-next mono" type="button" aria-label="Next image">&rarr;</button>
+  </dialog>
 </Base>

@@ -103,6 +103,46 @@ if (filters) {
   render();
 }
 
+/* ---------- update pages: images open full screen, and can't be right-clicked or dragged to save ---------- */
+document.addEventListener('contextmenu', e => { if ((e.target as Element).closest?.('.post img, #lb')) e.preventDefault(); });
+document.addEventListener('dragstart', e => { if ((e.target as Element).closest?.('.post img, #lb')) e.preventDefault(); });
+const lb = $<HTMLDialogElement>('#lb');
+const zoomable = [...document.querySelectorAll<HTMLImageElement>('.post-cover img, .post-body img')];
+if (lb && zoomable.length && typeof lb.showModal === 'function') {
+  const lbImg = $<HTMLImageElement>('#lb-img')!, lbCap = $('#lb-cap')!, lbN = $('#lb-n')!;
+  const two = (n: number) => String(n).padStart(2, '0');
+  let at = 0;
+  const open = (n: number) => {
+    at = (n + zoomable.length) % zoomable.length;
+    const src = zoomable[at];
+    lbImg.src = src.currentSrc || src.src; lbImg.alt = src.alt;
+    const cap = src.closest('figure')?.querySelector('figcaption');
+    lbCap.textContent = cap ? [...cap.children].map(s => s.textContent!.trim()).filter(Boolean).join('  ·  ') : '';
+    lbN.textContent = `${two(at + 1)} / ${two(zoomable.length)}`;
+    if (!lb.open) lb.showModal();
+  };
+  lb.classList.toggle('single', zoomable.length === 1);
+  zoomable.forEach((im, n) => { im.classList.add('zoomable'); im.draggable = false; im.addEventListener('click', () => open(n)); });
+  // clicking the dark area around the image closes it, like the close button
+  lb.addEventListener('click', e => {
+    const t = e.target as Element;
+    if (t.closest('.lb-prev')) open(at - 1);
+    else if (t.closest('.lb-next')) open(at + 1);
+    else if (t.closest('.lb-x') || t === lb) lb.close();
+  });
+  lb.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); open(at - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); open(at + 1); }
+  });
+  let sx = 0, sy = 0;
+  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) open(at + (dx < 0 ? 1 : -1));
+  });
+  lb.addEventListener('close', () => { lbImg.removeAttribute('src'); });
+}
+
 /* ---------- CV: jump to a section, mark the one in view, print ---------- */
 const cvLinks = document.querySelectorAll<HTMLAnchorElement>('.cv-index a');
 cvLinks.forEach(a => a.addEventListener('click', e => {
