@@ -32,12 +32,17 @@ summary: "Neuro-responsive installation: EEG and heart-rate data reshape sound
   and image in the room."
 images:
   - src: /media/ENACT-Photo-03.webp
-    caption: Placeholder image
+    caption: Experience
+    credit: Design Team
   - src: /media/ENACT-Photo-25.webp
-    caption: Placeholder image
+    caption: Experience
+    credit: Design Team
   - src: /media/ENACT-Photo-09.webp
-    caption: Placeholder image
+    caption: Experience
+    credit: Design Team
   - src: /media/ENACT-Photo-01.webp
+    caption: Experience
+    credit: Design Team
 videos:
   - url: https://www.youtube.com/watch?v=1qa2YLRez18&t=3s
     caption: "KHORA: Space of Becoming with Mind and Body"
