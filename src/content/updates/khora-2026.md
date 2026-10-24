@@ -68,29 +68,21 @@ Ultimately, KHORA invites participants to reconsider the boundaries between body
 
 
 
-*Where presuppositions are suspended,*\
-*how far can a space extend-*\
-*a dynamic, continuous,*\
+*Where presuppositions are suspended,*  
+*how far can a space extend-*  
+*a dynamic, continuous,*  
 *ever-emergent field?*
 
-*What other states might it become-*\
-*a space formed by the body within,*\
-*densely pulsing,*\
-*expanding through its presence,*\
+*What other states might it become-*  
+*a space formed by the body within,*  
+*densely pulsing,*  
+*expanding through its presence,*  
 *coming alive.*
 
 
 
-&nbsp;
-
-&nbsp;
-
-**Support Team:** Doruk Sivri, Sevinç Şimşir, Sinan Ayaz, Gaye Arda, İzlem Acar
-
-**Advisors:** Doğu Yıldırım, Ayşe Hale Kenar, Tülay Karakaş
-
-**Sound Design Collaboration:** Audio Rituals - Immersive Audio Labs
-
-**Supporting Institutions:** Istanbul Medipol University, Faculty of Fine Arts, Design and Architecture, Istanbul Technical University, Architectural Design Computing Program, TOUCH Event, FOCAL
-
-**Photography:** Burhan Canlı, Merve Yumuk, IDAF Çekim Ekibi, Griyer
+**Support Team:** Doruk Sivri, Sevinç Şimşir, Sinan Ayaz, Gaye Arda, İzlem Acar  
+**Advisors:** Doğu Yıldırım, Ayşe Hale Kenar, Tülay Karakaş  
+**Sound Design Collaboration:** Audio Rituals - Immersive Audio Labs  
+**Supporting Institutions:** Istanbul Medipol University, Faculty of Fine Arts, Design and Architecture, Istanbul Technical University, Architectural Design Computing Program, TOUCH Event, FOCAL  
+**Photography:** Burhan Canlı, Merve Yumuk, IDAF Çekim Ekibi, GRIYER
