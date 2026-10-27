@@ -14,7 +14,7 @@ const updates = defineCollection({
     subtitle: z.string().optional(),
     date: z.coerce.date(),
     showDate: z.enum(['day', 'month', 'year']).default('month'),
-    endDate: z.coerce.date().optional(),
+    endDate: z.preprocess(v => (v === '' || v === null ? undefined : v), z.coerce.date().optional()),
     types: z.array(z.enum(TYPES)).min(1),
     keywords: z.array(z.string()).default([]),
     venue: z.string(),

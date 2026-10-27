@@ -22,7 +22,7 @@ content:
       - { name: title, label: Title, type: string, required: true }
       - { name: shortTitle, label: Short title for the Home card, type: string, description: "Optional. Used when the title is long, e.g. SIGraDi 2025." }
       - { name: subtitle, label: Subtitle, type: string }
-      - { name: date, label: Date, type: date, required: true, description: "Start date. Used for ordering." }
+      - { name: date, label: Date, type: date, required: true, default: "", description: "Start date. Used for ordering." }
       - name: showDate
         label: Show date as
         type: select
@@ -32,7 +32,7 @@ content:
             - { value: day, label: "Day (3 Jun 2026)" }
             - { value: month, label: "Month (Jun 2026)" }
             - { value: year, label: "Year (2026)" }
-      - { name: endDate, label: End date, type: date, description: "Optional, for exhibitions or workshops over several days." }
+      - { name: endDate, label: End date, type: date, default: "", description: "Optional, for exhibitions or workshops over several days." }
       - name: types
         label: Type
         type: select

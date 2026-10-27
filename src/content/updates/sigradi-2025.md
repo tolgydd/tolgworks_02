@@ -4,7 +4,6 @@ shortTitle: SIGraDi 2025
 subtitle: Toward A Multisensory Spatial Experience
 date: 2025-11-19
 showDate: month
-endDate: 2026-10-25
 types:
   - Publication
   - Conference
