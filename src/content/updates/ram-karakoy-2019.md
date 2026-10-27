@@ -4,7 +4,6 @@ shortTitle: R.A.M. Karaköy
 subtitle: Karaköy Mapping
 date: 2019-01-01
 showDate: year
-endDate: 2026-10-27
 types:
   - Workshop
 venue: ITU Architectural Project Studio IV
