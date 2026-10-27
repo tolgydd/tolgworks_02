@@ -5,6 +5,7 @@ date: 2016-01-01
 showDate: year
 endDate: 2026-10-27
 types:
+  - Event
   - Workshop
 venue: Jane's Walk
 city: Gdańsk, Poland

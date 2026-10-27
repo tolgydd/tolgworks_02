@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // The fixed list of types. These are the filter tags on the Updates page.
-export const TYPES = ['Installation', 'Exhibition', 'Conference', 'Publication', 'Workshop', 'Seminar', 'Talk', 'Jury'] as const;
+export const TYPES = ['Installation', 'Exhibition', 'Conference', 'Publication', 'Workshop', 'Seminar', 'Talk', 'Jury', 'Event'] as const;
 
 // One Markdown file per update, in src/content/updates. The editor (Pages CMS, see .pages.yml) writes these files.
 const updates = defineCollection({

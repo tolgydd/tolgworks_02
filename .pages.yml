@@ -39,7 +39,7 @@ content:
         required: true
         options:
           multiple: true
-          values: [Installation, Exhibition, Conference, Publication, Workshop, Seminar, Talk, Jury]
+          values: [Installation, Exhibition, Conference, Publication, Workshop, Seminar, Talk, Jury, Event]
       - { name: keywords, label: Keywords, type: string, list: true }
       - { name: venue, label: Venue, type: string, required: true }
       - { name: city, label: "City, country", type: string }
