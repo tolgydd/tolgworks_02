@@ -4,11 +4,11 @@ shortTitle: R.A.M. Karaköy
 subtitle: Karaköy Mapping
 date: 2019-01-01
 showDate: year
+endDate: 2026-10-27
 types:
   - Workshop
 venue: ITU Architectural Project Studio IV
 city: Istanbul
-organiser: ITU
 role: Co-lead Tutor
 collaborators:
   - name: Hilal Bozkurt
@@ -26,3 +26,6 @@ images:
 featured: false
 draft: false
 ---
+The workshop began with an engaging discussion with students on mapping techniques, methods of abstraction, and various modes of representation. It continued with a field walk and documentation exercise in the Perşembe Pazarı district of Karaköy, where students examined the urban environment through on-site observations, sketches, and the identification of architectural details and potential narratives.
+
+These observations were discussed collectively in the field, encouraging students to interpret the site and explore the stories embedded within its urban fabric. The workshop concluded with a collaborative mapping exercise on a shared board, bringing together the locations selected by the students and tracing their spatial connections to the surrounding areas, both in front of and behind each chosen point.
