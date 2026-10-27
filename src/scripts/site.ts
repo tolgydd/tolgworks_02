@@ -189,4 +189,22 @@ function scramble(el: HTMLElement) {
 }
 document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el, i) => setTimeout(() => scramble(el), i * 180));
 
+/* ---------- reveal: parts fade up in order on load, and as they scroll into view ---------- */
+(window as any).__rv = 1;
+{
+  const STEP = 70, MAX = 700;
+  const ease = 'cubic-bezier(.2, .7, .2, 1)';
+  const reveal = (el: HTMLElement, d: number) => {
+    el.style.transition = `opacity ${reduce ? .4 : .7}s ease ${d}ms, transform .8s ${ease} ${d}ms`;
+    el.classList.add('in');
+    // hand the element its own transitions back once it has arrived
+    setTimeout(() => (el.style.transition = ''), d + 900);
+  };
+  const io = new IntersectionObserver(entries => {
+    const hits = entries.filter(e => e.isIntersecting).map(e => e.target as HTMLElement);
+    hits.forEach((el, i) => { io.unobserve(el); reveal(el, Math.min(i * STEP, MAX)); });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: .08 });
+  document.querySelectorAll<HTMLElement>('.hero-copy > *, .portrait, .readouts, .slabel, .work, .list > .row, .big, .filters, .pager, .back, .post-head, .post-cover, .post-meta, .post-body > *, .post-nav, .cv-top, .cv-index, .cv-block, .contact-grid > *').forEach(el => io.observe(el));
+}
+
 export {};

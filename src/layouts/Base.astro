@@ -35,6 +35,9 @@ const ogImage = new URL(image || '/img/portrait.jpg', Astro.site).href;
   <script is:inline>
     // apply the remembered highlight colour before first paint
     try { const a = localStorage.getItem('accent'); if (a) document.documentElement.dataset.accent = a; } catch (e) {}
+    // sections start hidden and are revealed by site.ts; if that script never runs, show everything
+    document.documentElement.classList.add('rv-on');
+    setTimeout(() => { if (!window.__rv) document.documentElement.classList.remove('rv-on'); }, 2500);
   </script>
 </head>
 <body>

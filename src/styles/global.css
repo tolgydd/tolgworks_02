@@ -437,3 +437,8 @@ html:has(.lb[open]) { overflow: hidden; }
 .gallery figure:last-child:nth-child(even) { grid-column: 1 / -1; }
 .gallery figure:last-child:nth-child(even) .frame { aspect-ratio: 16 / 9; }
 .post-meta a.tag { text-decoration: none; }
+
+/* ---------- load and scroll reveal: parts fade up one after another (site.ts adds .in) ---------- */
+.rv-on :is(.hero-copy > *, .portrait, .readouts, .slabel, .work, .list > .row, .big, .filters, .pager, .back, .post-head, .post-cover, .post-meta, .post-body > *, .post-nav, .cv-top, .cv-index, .cv-block, .contact-grid > *):not(.in) { opacity: 0; transform: translateY(14px); }
+@media (prefers-reduced-motion: reduce) { .rv-on :is(.hero-copy > *, .portrait, .readouts, .slabel, .work, .list > .row, .big, .filters, .pager, .back, .post-head, .post-cover, .post-meta, .post-body > *, .post-nav, .cv-top, .cv-index, .cv-block, .contact-grid > *):not(.in) { transform: none; } }
+@media print { .rv-on :is(.hero-copy > *, .portrait, .readouts, .slabel, .work, .list > .row, .big, .filters, .pager, .back, .post-head, .post-cover, .post-meta, .post-body > *, .post-nav, .cv-top, .cv-index, .cv-block, .contact-grid > *) { opacity: 1 !important; transform: none !important; } }
