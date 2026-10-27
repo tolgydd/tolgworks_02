@@ -4,8 +4,10 @@ shortTitle: Jane's Walk
 subtitle: Architectural City Tours
 date: 2016-01-01
 showDate: year
+endDate: 2026-10-27
 types:
   - Workshop
+  - Event
 venue: Streets
 city: Gdańsk, Poland
 role: Tour Guide, Organiser Team
