@@ -57,8 +57,10 @@ function flow(x: number, y: number, t: number) {
 // density: slow patches where the dust is thicker
 const dens = (x: number, y: number, t: number) => .55 + .45 * Math.sin(x * .0042 + Math.cos(y * .0031 + t * .06) * 1.8 + t * .04);
 
+// with reduced motion the dust keeps drifting, but at a fraction of the speed
+const SPEED = reduce ? .3 : 1;
 function draw(ts: number) {
-  const t = ts / 1000;
+  const t = ts / 1000 * SPEED;
   ctx.clearRect(0, 0, W, H);
   const b = hero.getBoundingClientRect();
   const { x: mx, y: my } = cur();
@@ -68,7 +70,7 @@ function draw(ts: number) {
   for (const p of P) {
     const fl = flow(p.x, p.y, t);
     // drift velocity eases toward the flow; it is kept apart from the burst so a burst never snaps back
-    let fx = fl[0] + (Math.random() - .5) * .25, fy = fl[1] + (Math.random() - .5) * .25;
+    let fx = (fl[0] + (Math.random() - .5) * .25) * SPEED, fy = (fl[1] + (Math.random() - .5) * .25) * SPEED;
     p.vx += (fx - p.vx) * .04;
     p.vy += (fy - p.vy) * .04;
     if (inside) {
@@ -110,8 +112,7 @@ function draw(ts: number) {
   }
   pulses = pulses.filter(q => q.r < 1300);
   ctx.globalAlpha = 1;
-  // with reduced motion the dust only moves while the cursor is in it
-  if (!reduce || inside || pulses.length) requestAnimationFrame(draw); else running = false;
+  requestAnimationFrame(draw);
 }
 wake();
 

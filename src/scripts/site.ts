@@ -39,7 +39,7 @@ addEventListener('pointermove', e => {
 });
 document.addEventListener('pointerleave', () => { ret.classList.remove('on'); mx = my = -1; (window as any).__cursor = { x: -1, y: -1 }; });
 function follow() {
-  px += (tx - px) * (reduce ? 1 : .18); py += (ty - py) * (reduce ? 1 : .18);
+  px += (tx - px) * (reduce ? .3 : .18); py += (ty - py) * (reduce ? .3 : .18);
   peek.style.transform = `translate3d(${px}px, ${py}px, 0)`;
   requestAnimationFrame(follow);
 }

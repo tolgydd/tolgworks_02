@@ -195,7 +195,7 @@ p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 .work .wd { font-family: var(--body); font-size: 15px; color: #bdbdb8; text-align: justify; hyphens: auto; }
 .work h3 { background: linear-gradient(var(--accent), var(--accent)) left bottom / 0 2px no-repeat; transition: background-size .5s cubic-bezier(.2,.7,.1,1), color .3s; padding-bottom: 4px; }
 .work:hover h3 { background-size: 100% 2px; }
-@media (prefers-reduced-motion: reduce) { .work:hover .scan { animation: none; opacity: 0; } .work img { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .work:hover .scan { animation-duration: 4.5s; opacity: .6; } }
 .work .badge { position: absolute; left: 0; top: 0; background: var(--accent); color: var(--on-accent); padding: 5px 9px; }
 .work .meta { display: flex; justify-content: space-between; gap: 12px; }
 .work h3 { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 2.6vw, 38px); letter-spacing: -.03em; line-height: 1; margin: 0; justify-self: start; }
