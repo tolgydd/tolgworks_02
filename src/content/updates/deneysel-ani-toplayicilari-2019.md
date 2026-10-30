@@ -5,7 +5,7 @@ date: 2019-01-01
 showDate: year
 types:
   - Workshop
-venue: Artuklu University
+venue: Mardin Artuklu University
 city: Mardin
 organiser: UMÖB 18
 role: Co-lead Tutor
