@@ -12,7 +12,7 @@ role: Co-lead Tutor
 collaborators:
   - name: Hilal Bozkurt
     role: Co-lead Tutor
-  - name: Dr. Burçin Kürtüncü
+  - name: Dr. Burçin Güngen
     role: Lecturer
 images:
   - src: /media/59637872_2175165969271426_6386100638069030912_n.webp
