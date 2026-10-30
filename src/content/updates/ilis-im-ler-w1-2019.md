@@ -24,6 +24,7 @@ collaborators:
   - name: İnanç Şencan
     role: Co-lead Tutor
   - name: Burak Delikanlı
+    role: Co-lead Tutor
 images:
   - src: /media/IMG_9871-1.webp
   - src: /media/IMG_9876.webp
