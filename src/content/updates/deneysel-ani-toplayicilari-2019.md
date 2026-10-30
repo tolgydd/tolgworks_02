@@ -1,7 +1,7 @@
 ---
 title: Experimental Gleaning of Memories
 shortTitle: Buluntu Bellek
-date: 2019-01-01
+date: 2018-01-01
 showDate: year
 types:
   - Workshop
