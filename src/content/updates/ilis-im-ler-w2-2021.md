@@ -1,5 +1,6 @@
 ---
-title: İliş-im-ler W2
+title: PUPA Workshop
+subtitle: İliş-im-ler W2
 date: 2021-01-01
 showDate: year
 types:
@@ -16,8 +17,8 @@ collaborators:
   - name: Büşra Hamzaoğlu Zafer
     role: Co-lead Tutor
 images:
-  - src: /media/placeholders/ilis-im-ler-w2-2021.jpg
-    caption: Placeholder image
+  - src: /media/pupa_installation_upscaled_2800px.webp
+  - src: /media/3c8840cc-dbaa-458e-b993-19f6e4a378db.webp
 featured: false
 draft: false
 ---
