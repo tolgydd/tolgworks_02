@@ -15,7 +15,7 @@ collaborators:
   - name: Betül Uçkan
     role: Co-lead Tutor
     link: https://www.betuluckan.com/
-  - name: Ayçin Atukeren
+  - name: İnanç Şencan
     role: Co-lead Tutor
 summary: İliş-im-ler.3 explores the possibilities of unsettling and
   reconstructing spatial reality through light, sound, and fluid and/or
