@@ -8,12 +8,14 @@ types:
 keywords:
   - Narrative
   - Literature
-venue: FMV Işık University, invited seminar
+  - Early Modernism
+venue: FMV Işık University Campus
 city: Istanbul
-role: Invited speaker
+role: Invited Speaker
+summary: FMV Işık University
 images:
   - src: /media/bilinc_akisi_landscape_2800.webp
-    caption: Placeholder image
+    caption: Poster
 featured: false
 draft: false
 ---
