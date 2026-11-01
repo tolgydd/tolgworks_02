@@ -443,6 +443,26 @@ html:has(.lb[open]) { overflow: hidden; }
 }
 .gallery figure:last-child:nth-child(even) { grid-column: 1 / -1; }
 .gallery figure:last-child:nth-child(even) .frame { aspect-ratio: 16 / 9; }
+/* Shorts: several sit side by side; a single one becomes a tall tile in the gallery */
+.shorts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 18px; max-width: 640px; }
+.shorts figure { margin: 0; }
+.shorts .embed.tall, .gallery .g-short .embed.tall { max-width: none; }
+.gallery.with-short figure { display: flex; flex-direction: column; }
+.gallery.with-short figure .frame { flex: 1; }
+.gallery.with-short figure:last-child:nth-child(even) { grid-column: auto; }
+.gallery.with-short figure:last-child:nth-child(even) .frame { aspect-ratio: 4 / 3; }
+.gallery.pair figure:not(.g-short) .frame, .gallery.pair figure:first-child .frame { aspect-ratio: auto; }
+.gallery.pair figure:first-child, .gallery.stack figure:first-child { grid-column: auto; }
+.gallery.stack figure:first-child:not(.g-short) .frame { aspect-ratio: 4 / 3; }
+.gallery.stack .g-short, .gallery.lead .g-short { grid-row: span 2; }
+.gallery.lead figure:last-child:nth-child(odd):not(:nth-child(-n+4)) { grid-column: 1 / -1; }
+.gallery.lead figure:last-child:nth-child(odd):not(:nth-child(-n+4)) .frame { aspect-ratio: 16 / 9; }
+.gallery.stack .g-short .embed, .gallery.lead .g-short .embed { aspect-ratio: auto; flex: 1; min-height: 0; }
+@media (max-width: 860px) {
+  .gallery .g-short { grid-row: auto !important; }
+  .gallery .g-short .embed { aspect-ratio: 9 / 16 !important; max-width: 360px !important; flex: none !important; }
+  .gallery.with-short figure .frame { aspect-ratio: 4 / 3 !important; flex: none; }
+}
 .post-meta a.tag { text-decoration: none; }
 
 /* ---------- load and scroll reveal: parts fade up one after another (site.ts adds .in) ---------- */

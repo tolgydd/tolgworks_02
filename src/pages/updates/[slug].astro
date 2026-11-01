@@ -16,6 +16,11 @@ const first = d.images[0];
 const cover = placed.images.has(1) ? undefined : first;
 const rest = d.images.map((im, i) => ({ im, n: i + 1 })).filter(x => x.n > 1 && !placed.images.has(x.n));
 const videos = d.videos.filter((_, i) => !placed.videos.has(i + 1));
+// vertical Shorts sit side by side; a single Short joins the photo gallery as a tall tile
+const shorts = videos.filter(v => isShort(v.url));
+const wides = videos.filter(v => !isShort(v.url));
+const lone = shorts.length === 1 && rest.length > 0 ? shorts[0] : undefined;
+const shortMode = !lone ? '' : rest.length === 1 ? 'pair' : rest.length === 2 ? 'stack' : 'lead';
 ---
 <Base title={d.title} page="updates" description={d.summary || `${d.title}${d.subtitle ? ': ' + d.subtitle : ''}. ${place(u)}.`} image={first?.src}>
   <section class="wrap"><article class="post">
@@ -52,19 +57,37 @@ const videos = d.videos.filter((_, i) => !placed.videos.has(i + 1));
       <div class="post-body">
         {d.summary && <p class="lead">{d.summary}</p>}
         {u.rendered ? <div class="prose" set:html={placed.html} /> : <div class="prose"><Content /></div>}
-        {videos.map(v => (
+        {wides.map(v => (
           <figure style="margin:0">
-            <div class:list={['embed', { tall: isShort(v.url) }]}><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="embed"><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
             {v.caption && <figcaption class="mono"><span>{v.caption}</span></figcaption>}
           </figure>
         ))}
-        {rest.length > 0 && (
-          <div class="gallery">
-            {rest.map(({ im, n }) => (
+        {shorts.length > 0 && !lone && (
+          <div class="shorts">
+            {shorts.map(v => (
               <figure>
-                <div class="frame"><img alt={im.alt || ''} loading="lazy" src={im.src}></div>
-                <figcaption class="mono"><span>{figLabel(im, n)}</span>{im.credit && <span>photo: {im.credit}</span>}</figcaption>
+                <div class="embed tall"><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+                {v.caption && <figcaption class="mono"><span>{v.caption}</span></figcaption>}
               </figure>
+            ))}
+          </div>
+        )}
+        {rest.length > 0 && (
+          <div class:list={['gallery', shortMode && `with-short ${shortMode}`]}>
+            {rest.map(({ im, n }, j) => (
+              <Fragment>
+                {lone && j === (shortMode === 'lead' ? 1 : 0) && (
+                  <figure class="g-short">
+                    <div class="embed tall"><iframe src={embedUrl(lone.url)} title={lone.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+                    {lone.caption && <figcaption class="mono"><span>{lone.caption}</span></figcaption>}
+                  </figure>
+                )}
+                <figure>
+                  <div class="frame"><img alt={im.alt || ''} loading="lazy" src={im.src}></div>
+                  <figcaption class="mono"><span>{figLabel(im, n)}</span>{im.credit && <span>photo: {im.credit}</span>}</figcaption>
+                </figure>
+              </Fragment>
             ))}
           </div>
         )}
