@@ -1,5 +1,5 @@
 ---
-title: PUPA Workshop
+title: "[Untitled]"
 subtitle: İliş-im-ler W2
 date: 2021-01-01
 showDate: year
