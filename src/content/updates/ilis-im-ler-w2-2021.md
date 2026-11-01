@@ -1,7 +1,7 @@
 ---
 title: "[Untitled]"
 subtitle: İliş-im-ler W2
-date: 2021-01-01
+date: 2021-09-12
 showDate: year
 types:
   - Workshop
