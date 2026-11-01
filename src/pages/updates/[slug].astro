@@ -27,7 +27,10 @@ const videos = d.videos.filter((_, i) => !placed.videos.has(i + 1));
     </div>
     {cover && (
       <figure class="post-cover">
-        <div class="frame"><img alt={cover.alt || `${d.title}, cover image`} src={cover.src}></div>
+        <div class="mat crop"><i class="c3"></i><i class="c4"></i>
+          <span class="tab tl mono">No. {u.n} / cover</span><span class="tab tr mono">{formatRange(u)}</span>
+          <div class="frame"><img alt={cover.alt || `${d.title}, cover image`} src={cover.src}></div>
+        </div>
         {(cover.caption || cover.credit) && <figcaption class="mono"><span>{figLabel(cover, 1)}</span>{cover.credit && <span>photo: {cover.credit}</span>}</figcaption>}
       </figure>
     )}
