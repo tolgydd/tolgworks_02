@@ -1,7 +1,7 @@
 ---
 title: Photo-Acoustic Polarization
 subtitle: İlişimler LAB1
-date: 2021-01-01
+date: 2022-01-01
 showDate: year
 types:
   - Workshop
