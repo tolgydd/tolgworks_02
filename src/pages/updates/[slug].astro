@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { render } from 'astro:content';
-import { getUpdates, formatRange, place, embedUrl, placeMedia, figLabel } from '../../lib/updates';
+import { getUpdates, formatRange, place, embedUrl, isShort, placeMedia, figLabel } from '../../lib/updates';
 
 export async function getStaticPaths() {
   const updates = await getUpdates();
@@ -51,7 +51,7 @@ const videos = d.videos.filter((_, i) => !placed.videos.has(i + 1));
         {u.rendered ? <div class="prose" set:html={placed.html} /> : <div class="prose"><Content /></div>}
         {videos.map(v => (
           <figure style="margin:0">
-            <div class="embed"><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+            <div class:list={['embed', { tall: isShort(v.url) }]}><iframe src={embedUrl(v.url)} title={v.caption || `${d.title}, video`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>
             {v.caption && <figcaption class="mono"><span>{v.caption}</span></figcaption>}
           </figure>
         ))}

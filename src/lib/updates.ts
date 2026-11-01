@@ -42,7 +42,7 @@ const imageHtml = (im: Image, n: number, title: string) =>
   `<figcaption class="mono"><span>${esc(figLabel(im, n))}</span>${im.credit ? `<span>photo: ${esc(im.credit)}</span>` : ''}</figcaption></figure>`;
 
 const videoHtml = (v: Video, title: string) =>
-  `<figure class="fig"><div class="embed"><iframe src="${esc(embedUrl(v.url))}" title="${esc(v.caption || `${title}, video`)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` +
+  `<figure class="fig"><div class="${isShort(v.url) ? 'embed tall' : 'embed'}"><iframe src="${esc(embedUrl(v.url))}" title="${esc(v.caption || `${title}, video`)}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>` +
   (v.caption ? `<figcaption class="mono"><span>${esc(v.caption)}</span></figcaption>` : '') + `</figure>`;
 
 /**
@@ -67,8 +67,11 @@ export function placeMedia(u: Update) {
 }
 
 /** Turns a Vimeo or YouTube link into an embed address (no autoplay, so nothing makes sound on its own). */
+// YouTube Shorts are vertical, so they get a 9:16 frame
+export const isShort = (url: string) => /youtube\.com\/shorts\//.test(url);
+
 export function embedUrl(url: string) {
-  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]+)/);
   if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}`;
   const vm = url.match(/vimeo\.com\/(\d+)/);
   if (vm) return `https://player.vimeo.com/video/${vm[1]}?dnt=1`;
