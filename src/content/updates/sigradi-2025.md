@@ -34,10 +34,10 @@ images:
 links:
   - label: Conference
     url: https://sigradi.org/
-featured: true
+featured: false
 featuredOrder: 3
 draft: false
 ---
 This study explores *immersive space* through a phenomenological lens, focusing on the interaction between material and immaterial components. It follows two phases: first, identifying key spatial phenomena—such as *audiovisual effects, tactile boundaries, and multisensory integration*—by suspending prior assumptions; second, designing an installation that integrates generative content, projection mapping, and user interaction. The resulting space is not fixed but constantly reshaped through perception and bodily engagement. Rather than a static structure, *immersive space* is reframed as a dynamic field where all elements—physical, digital, and experiential—act simultaneously as content, medium, and co-creator.  
-  
+
 Uçkan, B., Atukeren, A., Aydoğdu, T., & Gürer, E. Paper presented at SIGraDi 2025, Córdoba, Argentina, 19–21 November 2025.
