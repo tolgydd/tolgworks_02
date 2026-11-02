@@ -25,6 +25,8 @@ images:
   - src: /media/IMG_9241 copy 2.webp
   - src: /media/IMG_9241 copy.webp
   - src: /media/IMG_9241 copy 4.webp
+videos:
+  - url: https://youtu.be/xlqoaws_WN8
 featured: true
 featuredOrder: 3
 draft: false
