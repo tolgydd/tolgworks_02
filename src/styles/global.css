@@ -122,15 +122,17 @@ p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 .areas ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1px 16px; color: #a9a9a4; font-size: 14px; line-height: 1.4; }
 .areas li { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
 .areas li::before { content: ""; width: 4px; height: 4px; background: #6a6a64; }
-.portrait { justify-self: end; width: min(100%, 360px); }
-.portrait .frame { position: relative; aspect-ratio: 480 / 535; overflow: hidden; background: #222; }
-.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.25) brightness(.6); }
-.portrait .frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(23,23,22,.65)); }
+/* the portrait runs exactly as tall as the text beside it (name to research areas); its width follows the photo's ratio */
+.portrait { align-self: stretch; position: relative; min-height: 240px; }
+.portrait .crop { position: absolute; top: 0; bottom: 0; right: 0; max-width: 100%; }
+.portrait .frame { position: relative; height: 100%; aspect-ratio: 1558 / 1948; max-width: 100%; overflow: hidden; background: #111; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; display: block; filter: grayscale(1); }
+.portrait .frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 70%, rgba(23,23,22,.45)); }
 .portrait .cross { position: absolute; left: 50%; top: 36%; width: 22px; height: 22px; transform: translate(-50%, -50%); }
 .portrait .cross::before, .portrait .cross::after { content: ""; position: absolute; background: var(--accent); }
 .portrait .cross::before { left: 50%; top: 0; bottom: 0; width: 1px; }
 .portrait .cross::after { top: 50%; left: 0; right: 0; height: 1px; }
-.portrait figcaption { display: flex; justify-content: space-between; margin-top: 14px; gap: 12px; }
+.portrait figcaption { position: absolute; left: 0; right: 0; top: 100%; display: flex; justify-content: space-between; margin-top: 14px; gap: 12px; }
 .ticks { position: absolute; right: -26px; top: 10%; bottom: 10%; width: 12px;
   background: repeating-linear-gradient(180deg, var(--accent) 0 1px, transparent 1px 12px); opacity: .8; }
 .readouts { position: relative; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 14px; border-top: 1px solid var(--rule); }
@@ -350,7 +352,10 @@ footer { border-top: 1px solid var(--rule); padding-block: 18px; display: flex; 
 
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: minmax(0, 1fr); }
-  .portrait { justify-self: start; width: min(78%, 300px); }
+  .portrait { justify-self: start; width: min(78%, 300px); display: block; min-height: 0; }
+  .portrait .crop { position: relative; }
+  .portrait .frame { height: auto; width: 100%; }
+  .portrait figcaption { position: static; }
   .ticks { display: none; }
   .row { grid-template-columns: 48px minmax(0, 1fr); }
   .row > * { padding: 3px 12px; }
