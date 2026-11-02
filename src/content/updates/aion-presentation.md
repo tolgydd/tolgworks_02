@@ -21,10 +21,15 @@ summary: AION and KHORA, two spatial installations developed through İlişimler
   Mylovanovic.
 images:
   - src: /media/Yeşil Ekran Önünde Toplantı.webp
+    credit: Eléni Yapoutzidi-Karra
   - src: /media/IMG_9241 copy 3.webp
+    credit: J.J. Hellerman
   - src: /media/IMG_9241 copy 2.webp
+    credit: J.J. Hellerman
   - src: /media/IMG_9241 copy.webp
+    credit: J.J. Hellerman
   - src: /media/IMG_9241 copy 4.webp
+    credit: J.J. Hellerman
 videos:
   - url: https://youtu.be/xlqoaws_WN8
 featured: true
