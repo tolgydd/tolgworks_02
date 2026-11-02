@@ -7,15 +7,15 @@ types:
   - Workshop
 venue: MEF University FADA Workshop Week
 city: Istanbul
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Betül Uçkan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
     link: https://www.betuluckan.com/
   - name: Büşra Hamzaoğlu Zafer
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Ece Arman İbrahimoğlu
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
 images:
   - src: /media/60a17477-8fcb-46d0-807b-df8d144140df.webp
   - src: /media/Mavi Işıklar İçinde Siluet.webp

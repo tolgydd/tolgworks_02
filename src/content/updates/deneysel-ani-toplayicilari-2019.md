@@ -8,12 +8,12 @@ types:
 venue: Mardin Artuklu University
 city: Mardin
 organiser: UMÖB 18
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Hilal Bozkurt
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Gizem Savcı
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
 images:
   - src: /media/WhatsApp Image 2018-07-22 at 17.49.55.webp
     caption: Placeholder image

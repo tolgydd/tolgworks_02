@@ -8,10 +8,10 @@ types:
   - Workshop
 venue: ITU Architectural Project Studio IV
 city: Istanbul
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Hilal Bozkurt
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Dr. Burçin Güngen
     role: Lecturer
 images:

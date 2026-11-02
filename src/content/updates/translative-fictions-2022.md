@@ -8,10 +8,10 @@ types:
 venue: ITU Architectural Project Studio II
 city: Istanbul
 organiser: Istanbul Technical University
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Aybeniz Çalışkan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Dr. Burçin Güngen
     role: Lecturer
 summary: The workshop investigates how space is perceived, interpreted, and

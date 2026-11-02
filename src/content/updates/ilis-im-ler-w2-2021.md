@@ -8,14 +8,14 @@ types:
 venue: Gebze Technical University
 city: Gebze, İstanbul
 organiser: PUPA 4.0
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Burak Delikanlı
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Ece Arman İbrahimoğlu
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Büşra Hamzaoğlu Zafer
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
 images:
   - src: /media/pupa_installation_upscaled_2800px.webp
   - src: /media/3c8840cc-dbaa-458e-b993-19f6e4a378db.webp

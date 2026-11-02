@@ -16,15 +16,15 @@ keywords:
 venue: MEF University
 city: Istanbul
 organiser: UMÖB 19
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Betül Uçkan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
     link: https://www.betuluckan.com/
   - name: İnanç Şencan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Burak Delikanlı
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
 summary: "This work is a spatial re-production specific to Istanbul.
   Participants freely wander through the historic peninsula and, inspired by the
   concept of the palimpsest, digitally record the city’s overlapping historical

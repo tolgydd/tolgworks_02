@@ -8,15 +8,15 @@ types:
 venue: UMÖB 20,5
 city: Denizli
 organiser: Pamukkale University
-role: Co-lead Tutor
+role: Co-Lead Tutor
 collaborators:
   - name: Ayçin Atukeren
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
   - name: Betül Uçkan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
     link: https://www.betuluckan.com/
   - name: İnanç Şencan
-    role: Co-lead Tutor
+    role: Co-Lead Tutor
 summary: İliş-im-ler.3 explores the possibilities of unsettling and
   reconstructing spatial reality through light, sound, and fluid and/or
   ephemeral materials. By employing seemingly neutral elements as instruments of
