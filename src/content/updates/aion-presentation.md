@@ -1,7 +1,7 @@
 ---
 title: "[AION] Presentation"
 shortTitle: "[AION] Presentation"
-subtitle: Design-Architecture Forum
+subtitle: AA Design-Architecture Forum
 date: 2026-08-14
 showDate: month
 endDate: 2026-08-18
