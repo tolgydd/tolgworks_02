@@ -20,21 +20,21 @@ organiser: TED University
 role: Co-Author
 collaborators:
   - name: B. Uçkan
-    role: Co-author
+    role: Co-Author
   - name: A. Atukeren
-    role: Co-author
+    role: Co-Author
   - name: B. Özmutlu
-    role: Co-author
+    role: Co-Author
   - name: A. Dağ
-    role: Co-author
+    role: Co-Author
   - name: U. Pektetik
-    role: Co-author
+    role: Co-Author
   - name: A. Gün
-    role: Co-author
+    role: Co-Author
   - name: E. Gürer
-    role: Co-author
+    role: Co-Author
   - name: T. Karakaş
-    role: Co-author
+    role: Co-Author
 summary: A framework that turns human neurophysiological data into inputs for generative design, so space can respond to the people in it.
 images:
   - src: /media/neurogenerative-architecture.webp

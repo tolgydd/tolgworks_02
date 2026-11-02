@@ -17,11 +17,11 @@ organiser: Ibero-American Society of Digital Graphics
 role: Co-Author
 collaborators:
   - name: B. Uçkan
-    role: Co-author
+    role: Co-Author
   - name: A. Atukeren
-    role: Co-author
+    role: Co-Author
   - name: E. Gürer
-    role: Co-author
+    role: Co-Author
 summary: Paper presented at SIGraDi 2025, the XXVII International Conference of
   the Ibero-American Society of Digital Graphics.
 images:
