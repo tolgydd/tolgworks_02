@@ -6,8 +6,7 @@ export const SITE = {
   email: 'tolgydd@gmail.com',
   defaultAccent: 'lime',
   links: [
-    { label: 'Instagram', url: 'https://www.instagram.com/' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/' },
-    { label: 'ORCID', url: 'https://orcid.org/' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/tolgydd/' },
+    { label: 'ORCID', url: 'https://orcid.org/0009-0000-5117-0286' },
   ],
 };
