@@ -17,7 +17,7 @@ keywords:
 venue: MSTAS 2026
 city: Ankara, Türkiye
 organiser: TED University
-role: Co-author
+role: Co-Author
 collaborators:
   - name: B. Uçkan
     role: Co-author

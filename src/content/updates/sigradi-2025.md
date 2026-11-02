@@ -14,7 +14,7 @@ keywords:
 venue: SIGraDi 2025
 city: Córdoba, Argentina
 organiser: Ibero-American Society of Digital Graphics
-role: Co-author
+role: Co-Author
 collaborators:
   - name: B. Uçkan
     role: Co-author
