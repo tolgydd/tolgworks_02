@@ -21,6 +21,7 @@ Each update is a Markdown file in `src/content/updates/`, so it can also be edit
 | CV | `src/pages/cv.astro`, then `npm run build && npm run cv-pdf` to refresh the PDF |
 | Contact text | `src/pages/contact.astro` |
 | Colours, type, layout | `src/styles/global.css` |
+| Exclude your own browser from post view counts | Open `https://tolgworks.co/?me=1` once per browser (`?me=0` re-enables) |
 
 ## Running locally
 

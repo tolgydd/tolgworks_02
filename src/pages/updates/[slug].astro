@@ -26,14 +26,14 @@ const shortMode = !lone ? '' : rest.length === 1 ? 'pair' : rest.length === 2 ? 
   <section class="wrap"><article class="post">
     <a class="back mono" href="/updates/">&larr; All updates</a>
     <div class="post-head">
-      <div class="kicker mono"><b>No. {u.n}</b><span>{formatRange(u)}</span><span>{d.types.join(' / ')}</span>{d.featured && <b>Featured</b>}</div>
+      <div class="kicker mono"><b>No. {u.n}</b><span>{formatRange(u)}</span><span>{d.types.join(' / ')}</span>{d.featured && <b>Featured</b>}{!cover && <span class="kviews" data-views={u.id} aria-hidden="true" hidden></span>}</div>
       <h1 class:list={['post-h', { long: d.title.length > 28 }]}>{d.title}</h1>
       {d.subtitle && <p class="post-sub">{d.subtitle}</p>}
     </div>
     {cover && (
       <figure class="post-cover">
         <div class="mat crop"><i class="c3"></i><i class="c4"></i>
-          <span class="tab tl mono">No. {u.n} / cover</span><span class="tab tr mono">{formatRange(u)}</span>
+          <span class="tab tl mono">No. {u.n} / {formatRange(u)}</span><span class="tab tr mono" data-views={u.id} aria-hidden="true" hidden></span>
           <div class="frame"><img alt={cover.alt || `${d.title}, cover image`} src={cover.src}></div>
         </div>
         {(cover.caption || cover.credit) && <figcaption class="mono"><span>{figLabel(cover, 1)}</span>{cover.credit && <span>photo: {cover.credit}</span>}</figcaption>}

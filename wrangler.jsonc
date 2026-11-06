@@ -1,9 +1,26 @@
-// Cloudflare deploy settings: the built site in dist/ is served as static files.
+// Cloudflare deploy settings: static files in dist/ + lightweight Worker for post view counts.
 {
   "name": "tolgworks",
+  "main": "./worker/index.mjs",
   "compatibility_date": "2025-10-01",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "VIEWS",
+        "class_name": "ViewCounter"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["ViewCounter"]
+    }
+  ]
 }

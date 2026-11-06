@@ -4,6 +4,19 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
 
+/* ---------- owner opt-out (?me=1 excludes this browser from view counts; ?me=0 re-enables) ---------- */
+let meToggle: '1' | '0' | null = null;
+{
+  const q = new URLSearchParams(location.search);
+  const me = q.get('me');
+  if (me === '1' || me === '0') {
+    meToggle = me;
+    try { me === '1' ? localStorage.setItem('tw_me', '1') : localStorage.removeItem('tw_me'); } catch (e) {}
+    q.delete('me');
+    try { history.replaceState(null, '', location.pathname + (q.size ? '?' + q.toString() : '') + location.hash); } catch (e) {}
+  }
+}
+
 /* ---------- highlight colour ---------- */
 function setAccent(c: string) {
   root.dataset.accent = c;
@@ -171,6 +184,34 @@ email?.addEventListener('click', () => {
   if (navigator.clipboard) navigator.clipboard.writeText(t).then(() => say('Email copied'), () => say(t));
   else say(t);
 });
+
+/* ---------- post view counter ---------- */
+if (meToggle !== null) {
+  setTimeout(() => say(meToggle === '1' ? 'Device excluded from view counts' : 'Device counting re-enabled'), 250);
+}
+const viewEl = $<HTMLElement>('[data-views]');
+if (viewEl?.dataset.views) {
+  const slug = viewEl.dataset.views;
+  let owner = false;
+  try { owner = localStorage.getItem('tw_me') === '1'; } catch (e) {}
+  const readOnly = owner || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || navigator.webdriver;
+  const run = () => {
+    fetch(`/api/v/${encodeURIComponent(slug)}`, { method: readOnly ? 'GET' : 'POST' })
+      .then(r => (r.ok ? r.json() : null))
+      .then((d: { n?: number } | null) => {
+        if (d && typeof d.n === 'number') {
+          viewEl.textContent = String(d.n).padStart(2, '0');
+          viewEl.hidden = false;
+        }
+      })
+      .catch(() => {});
+  };
+  if (document.visibilityState === 'prerender') {
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') run(); }, { once: true });
+  } else {
+    run();
+  }
+}
 
 /* ---------- signal decode on load ---------- */
 function scramble(el: HTMLElement) {
