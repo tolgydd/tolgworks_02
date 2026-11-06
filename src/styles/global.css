@@ -353,7 +353,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 18px; display: flex; 
 
 @media (max-width: 860px) {
   .hero-inner { grid-template-columns: minmax(0, 1fr); }
-  .portrait { justify-self: start; width: min(78%, 300px); display: block; min-height: 0; }
+  .portrait { justify-self: center; width: min(100%, 440px); display: block; min-height: 0; }
   .portrait .crop { position: relative; }
   .portrait .frame { height: auto; width: 100%; }
   .portrait figcaption { position: static; }
@@ -383,6 +383,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 18px; display: flex; 
   .bar { gap: 12px; }
   nav { margin-left: 0; order: 3; width: 100%; }
 }
+@media (max-width: 600px) { .portrait { width: 100%; justify-self: stretch; } }
 @media (hover: none) { #peek, #reticle { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   .row::before { transition: none; }

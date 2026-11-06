@@ -1,6 +1,7 @@
 import { DurableObject } from 'cloudflare:workers';
 
 const DAY_SEC = 86400;
+const COUNTER_EPOCH = 2; // bump to wipe all counts & seen hashes once on next deploy
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
 const BOT_RE =
   /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|whatsapp|telegram|discord|slack|twitter|linkedin|embedly|quora|pinterest|preview|headless|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|curl|wget|python|go-http|axios|node-fetch/i;
@@ -20,7 +21,21 @@ export class ViewCounter extends DurableObject {
           ts INTEGER NOT NULL,
           PRIMARY KEY (slug, vh)
         );
+        CREATE TABLE IF NOT EXISTS meta (
+          k TEXT PRIMARY KEY,
+          v INTEGER NOT NULL
+        );
       `);
+      const ep = this.ctx.storage.sql
+        .exec("SELECT v FROM meta WHERE k = 'epoch'")
+        .toArray()[0];
+      if (!ep || Number(ep.v) < COUNTER_EPOCH) {
+        this.ctx.storage.sql.exec('DELETE FROM counts; DELETE FROM seen;');
+        this.ctx.storage.sql.exec(
+          "INSERT INTO meta (k, v) VALUES ('epoch', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v",
+          COUNTER_EPOCH
+        );
+      }
     });
   }
 

@@ -9,13 +9,14 @@ const tick = () => { clock.textContent = new Date().toLocaleTimeString('en-GB', 
 tick(); setInterval(tick, 1000);
 
 type P = { x: number; y: number; vx: number; vy: number; ix: number; iy: number; s: number; a: number; heat: number };
+type Pulse = { x: number; y: number; r: number; max: number; step: number };
 /* ---------- hero field: dust cloud ---------- */
 // Particles drift on a slowly changing flow field, so the cloud has no fixed form.
 // The resting cursor stirs a soft eddy; a click bursts the dust outward and it settles back into the drift.
 const cv = document.getElementById('field') as HTMLCanvasElement, ctx = cv.getContext('2d')!;
 const hero = document.querySelector('.hero') as HTMLElement;
 const pcount = document.getElementById('pcount')!;
-let W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), P: P[] = [], pulses: { x: number; y: number; r: number }[] = [];
+let W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), P: P[] = [], pulses: Pulse[] = [];
 function size() {
   const b = hero.getBoundingClientRect();
   if (!b.width || !b.height) return;
@@ -32,16 +33,54 @@ let running = false;
 const wake = () => { if (!running) { running = true; requestAnimationFrame(draw); } };
 size();
 new ResizeObserver(() => { size(); wake(); }).observe(hero);
-hero.addEventListener('pointermove', wake);
-hero.addEventListener('pointerdown', e => {
-  if ((e.target as Element).closest('a, button')) return;
-  const b = hero.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
-  pulses.push({ x, y, r: 0 });
+
+function burst(clientX: number, clientY: number, touch: boolean) {
+  const b = hero.getBoundingClientRect(), x = clientX - b.left, y = clientY - b.top;
+  const rad = touch ? 250 : 760;
+  const force = touch ? 8.5 : 22;
+  pulses.push({ x, y, r: 0, max: touch ? 520 : 1300, step: touch ? 8 : 12 });
   for (const p of P) {
     const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy) || 1;
-    if (d < 760) { const f = Math.pow(1 - d / 760, 1.2) * 22 * (.6 + Math.random() * .8); p.ix += dx / d * f; p.iy += dy / d * f; }
+    if (d < rad) {
+      const f = Math.pow(1 - d / rad, 1.2) * force * (.6 + Math.random() * .8);
+      p.ix += dx / d * f; p.iy += dy / d * f;
+    }
   }
   wake();
+}
+
+hero.addEventListener('pointermove', wake);
+// Desktop fires immediately on press; touch waits to confirm a deliberate tap (never a scroll/swipe).
+let tap: { id: number; x: number; y: number; sy: number; t: number } | null = null;
+let lastTouchBurst = 0;
+addEventListener('scroll', () => { tap = null; }, { passive: true });
+hero.addEventListener('pointerdown', e => {
+  if ((e.target as Element).closest('a, button')) return;
+  if (e.pointerType === 'touch') {
+    tap = { id: e.pointerId, x: e.clientX, y: e.clientY, sy: scrollY, t: performance.now() };
+    return;
+  }
+  if (e.button !== 0) return;
+  burst(e.clientX, e.clientY, false);
+});
+hero.addEventListener('pointermove', e => {
+  if (tap && e.pointerId === tap.id && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) > 8) tap = null;
+});
+hero.addEventListener('pointercancel', () => { tap = null; });
+hero.addEventListener('pointerup', e => {
+  if (!tap || e.pointerId !== tap.id) return;
+  const start = tap;
+  tap = null;
+  const now = performance.now();
+  if (
+    now - start.t < 250 &&
+    Math.hypot(e.clientX - start.x, e.clientY - start.y) < 8 &&
+    Math.abs(scrollY - start.sy) <= 4 &&
+    now - lastTouchBurst > 900
+  ) {
+    lastTouchBurst = now;
+    burst(e.clientX, e.clientY, true);
+  }
 });
 
 // flow: the curl of a slowly changing stream function. It swirls but has no sinks,
@@ -104,13 +143,13 @@ function draw(ts: number) {
   }
   ctx.strokeStyle = accent;
   for (const q of pulses) {
-    q.r += 12;
-    const fade = Math.max(0, 1 - q.r / 1300);
+    q.r += q.step;
+    const fade = Math.max(0, 1 - q.r / q.max);
     ctx.lineWidth = 1.5; ctx.globalAlpha = fade * .95;
     ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, Math.PI * 2); ctx.stroke();
     if (q.r > 36) { ctx.lineWidth = 1; ctx.globalAlpha = fade * .45; ctx.beginPath(); ctx.arc(q.x, q.y, q.r - 30, 0, Math.PI * 2); ctx.stroke(); }
   }
-  pulses = pulses.filter(q => q.r < 1300);
+  pulses = pulses.filter(q => q.r < q.max);
   ctx.globalAlpha = 1;
   requestAnimationFrame(draw);
 }
