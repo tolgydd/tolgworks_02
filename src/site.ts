@@ -2,7 +2,7 @@
 export const SITE = {
   title: 'Tolga Aydoğdu',
   domain: 'tolgworks.co',
-  description: 'Tolga Aydoğdu: architect, interior architect and illustrator in Istanbul, working on architectural narrative and multisensory spatial experience.',
+  description: 'Tolga Aydoğdu (tolgworks): architect, interior architect and illustrator in Istanbul, working on architectural narrative and multisensory spatial experience.',
   email: 'tolgydd@gmail.com',
   defaultAccent: 'lime',
   // Optional: paste your Google Search Console verification code here if using HTML meta tag verification
@@ -11,6 +11,9 @@ export const SITE = {
     'Tolga Aydoğdu',
     'Tolga Aydogdu',
     'tolgworks',
+    'tolgaworks',
+    'tolga works',
+    'tolgworks.co',
     'architect Istanbul',
     'interior architect Istanbul',
     'architectural narrative',
