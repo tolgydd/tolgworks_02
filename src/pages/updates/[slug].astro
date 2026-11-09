@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { render } from 'astro:content';
 import { getUpdates, formatRange, place, embedUrl, isShort, placeMedia, figLabel } from '../../lib/updates';
+import { SITE } from '../../site';
 
 export async function getStaticPaths() {
   const updates = await getUpdates();
@@ -21,8 +22,61 @@ const shorts = videos.filter(v => isShort(v.url));
 const wides = videos.filter(v => !isShort(v.url));
 const lone = shorts.length === 1 && rest.length > 0 ? shorts[0] : undefined;
 const shortMode = !lone ? '' : rest.length === 1 ? 'pair' : rest.length === 2 ? 'stack' : 'lead';
+
+const siteUrl = Astro.site ?? new URL(`https://${SITE.domain}`);
+const pageUrl = new URL(`/updates/${u.id}/`, siteUrl).href;
+const description = d.summary || `${d.title}${d.subtitle ? ': ' + d.subtitle : ''}. ${place(u)}.`;
+const pageKeywords = [...new Set([...d.types, ...d.keywords, SITE.title, SITE.domain])];
+const schemaType = d.types.includes('Publication')
+  ? 'ScholarlyArticle'
+  : d.types.includes('Installation') || d.types.includes('Exhibition')
+    ? 'VisualArtwork'
+    : 'CreativeWork';
+
+const updateJsonLd: Record<string, unknown> = {
+  '@type': schemaType,
+  '@id': `${pageUrl}#work`,
+  headline: d.title,
+  name: d.subtitle ? `${d.title}: ${d.subtitle}` : d.title,
+  description,
+  url: pageUrl,
+  datePublished: d.date.toISOString().split('T')[0],
+  author: { '@id': new URL('/#person', siteUrl).href },
+  creator: { '@id': new URL('/#person', siteUrl).href },
+  inLanguage: 'en',
+  keywords: pageKeywords.join(', '),
+  locationCreated: {
+    '@type': 'Place',
+    name: place(u),
+  },
+  ...(d.images.length > 0
+    ? {
+        image: d.images.map(im => new URL(im.src, siteUrl).href),
+      }
+    : {}),
+  ...(d.collaborators.length > 0
+    ? {
+        contributor: d.collaborators.map(c => ({
+          '@type': 'Person',
+          name: c.name,
+          ...(c.role ? { jobTitle: c.role } : {}),
+          ...(c.link ? { url: c.link } : {}),
+        })),
+      }
+    : {}),
+};
 ---
-<Base title={d.title} page="updates" description={d.summary || `${d.title}${d.subtitle ? ': ' + d.subtitle : ''}. ${place(u)}.`} image={first?.src}>
+<Base
+  title={d.title}
+  page="updates"
+  type="article"
+  publishedTime={d.date.toISOString()}
+  description={description}
+  image={first?.src}
+  imageAlt={first?.alt || `${d.title}, cover image`}
+  keywords={pageKeywords}
+  jsonLd={updateJsonLd}
+>
   <section class="wrap"><article class="post">
     <a class="back mono" href="/updates/">&larr; All updates</a>
     <div class="post-head">

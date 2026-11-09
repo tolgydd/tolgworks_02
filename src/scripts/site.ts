@@ -1,6 +1,7 @@
 // Shared behaviour for every page: highlight colour, cursor reticle, hover preview,
 // decode-in titles, toasts, and the small widgets on the CV and Contact pages.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isBot = navigator.webdriver || /bot|crawl|spider|slurp|google|bing|yandex|duckduck/i.test(navigator.userAgent);
 const root = document.documentElement;
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
 
@@ -194,7 +195,7 @@ if (viewEl?.dataset.views) {
   const slug = viewEl.dataset.views;
   let owner = false;
   try { owner = localStorage.getItem('tw_me') === '1'; } catch (e) {}
-  const readOnly = owner || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || navigator.webdriver;
+  const readOnly = owner || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || isBot;
   const run = () => {
     fetch(`/api/v/${encodeURIComponent(slug)}`, { method: readOnly ? 'GET' : 'POST' })
       .then(r => (r.ok ? r.json() : null))
@@ -215,7 +216,7 @@ if (viewEl?.dataset.views) {
 
 /* ---------- signal decode on load ---------- */
 function scramble(el: HTMLElement) {
-  if (reduce) return;
+  if (reduce || isBot) return;
   const target = el.dataset.final || el.textContent || '';
   el.dataset.final = target;
   const glyphs = '+×/\\|-_=#01';
@@ -232,7 +233,7 @@ document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el, i) => set
 
 /* ---------- reveal: parts fade up in order on load, and as they scroll into view ---------- */
 (window as any).__rv = 1;
-{
+if (!isBot) {
   const STEP = 70, MAX = 700;
   const ease = 'cubic-bezier(.2, .7, .2, 1)';
   const reveal = (el: HTMLElement, d: number) => {

@@ -2,8 +2,30 @@
 import '../styles/global.css';
 import { SITE } from '../site';
 
-interface Props { title?: string; description?: string; page?: 'home' | 'updates' | 'cv' | 'contact'; image?: string }
-const { title, description = SITE.description, page, image } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  page?: 'home' | 'updates' | 'cv' | 'contact';
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: string;
+  keywords?: string[];
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+const {
+  title,
+  description = SITE.description,
+  page,
+  image,
+  imageAlt = `${SITE.title} — ${SITE.domain}`,
+  type = 'website',
+  publishedTime,
+  keywords = SITE.keywords,
+  noindex = false,
+  jsonLd,
+} = Astro.props;
 const fullTitle = title ? `${title} / ${SITE.domain}` : `${SITE.title} / ${SITE.domain}`;
 const nav = [
   { href: '/', label: 'Home', key: 'home' },
@@ -11,7 +33,124 @@ const nav = [
   { href: '/cv/', label: 'CV', key: 'cv' },
   { href: '/contact/', label: 'Contact', key: 'contact' },
 ];
-const ogImage = new URL(image || '/img/portrait.webp', Astro.site).href;
+const siteUrl = Astro.site ?? new URL(`https://${SITE.domain}`);
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(image || '/img/portrait.webp', siteUrl).href;
+const robotsContent = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const sameAs = SITE.links.map(l => l.url);
+const personId = new URL('/#person', siteUrl).href;
+const websiteId = new URL('/#website', siteUrl).href;
+
+const baseGraph: Array<Record<string, unknown>> = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: SITE.title,
+    alternateName: ['Tolga Aydogdu', 'tolgworks'],
+    url: new URL('/', siteUrl).href,
+    image: new URL('/img/portrait.webp', siteUrl).href,
+    email: `mailto:${SITE.email}`,
+    jobTitle: ['Architect', 'Interior Architect', 'Illustrator', 'Architectural Researcher'],
+    description: SITE.description,
+    sameAs,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Istanbul',
+      addressCountry: 'TR',
+    },
+    affiliation: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Istanbul Bilgi University',
+    },
+    alumniOf: [
+      {
+        '@type': 'CollegeOrUniversity',
+        name: 'Istanbul Technical University',
+      },
+      {
+        '@type': 'CollegeOrUniversity',
+        name: 'Istanbul Bilgi University',
+      },
+      {
+        '@type': 'CollegeOrUniversity',
+        name: 'Politechnika Gdańska',
+      },
+    ],
+    knowsAbout: [
+      'Architectural theory',
+      'Spatial epistemologies',
+      'Immersive and immaterial environments',
+      'Multisensory perception',
+      'Embodiment in architecture',
+      'Atmosphere and spatial cognition',
+      'Experimental spatial design',
+      'Generative audio environments',
+    ],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: new URL('/', siteUrl).href,
+    name: `${SITE.title} / ${SITE.domain}`,
+    alternateName: ['tolgworks', SITE.domain, SITE.title],
+    description: SITE.description,
+    inLanguage: 'en',
+    author: { '@id': personId },
+    publisher: { '@id': personId },
+  },
+];
+
+if (!noindex && Astro.url.pathname !== '/') {
+  const segments = Astro.url.pathname.split('/').filter(Boolean);
+  const itemListElement: Array<Record<string, unknown>> = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', siteUrl).href,
+    },
+  ];
+  if (segments[0] === 'updates') {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Updates',
+      item: new URL('/updates/', siteUrl).href,
+    });
+    if (segments.length > 1 && title) {
+      itemListElement.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: canonicalUrl,
+      });
+    }
+  } else if (title) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: title,
+      item: canonicalUrl,
+    });
+  }
+  baseGraph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  });
+}
+
+if (jsonLd) {
+  if (Array.isArray(jsonLd)) baseGraph.push(...jsonLd);
+  else baseGraph.push(jsonLd);
+}
+
+const schemaOrg = {
+  '@context': 'https://schema.org',
+  '@graph': baseGraph,
+};
 ---
 <!doctype html>
 <html lang="en" data-accent={SITE.defaultAccent}>
@@ -20,11 +159,30 @@ const ogImage = new URL(image || '/img/portrait.webp', Astro.site).href;
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{fullTitle}</title>
   <meta name="description" content={description}>
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>
+  <meta name="author" content={SITE.title}>
+  <meta name="robots" content={robotsContent}>
+  {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')}>}
+  {SITE.googleSiteVerification && <meta name="google-site-verification" content={SITE.googleSiteVerification}>}
+  <link rel="canonical" href={canonicalUrl}>
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
   <meta property="og:title" content={fullTitle}>
   <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:site_name" content={`${SITE.title} / ${SITE.domain}`}>
+  <meta property="og:locale" content="en_US">
   <meta property="og:image" content={ogImage}>
-  <meta property="og:type" content="website">
+  <meta property="og:image:alt" content={imageAlt}>
+  <meta property="og:type" content={type}>
+  {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime}>}
+  {type === 'article' && <meta property="article:author" content={SITE.title}>}
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={fullTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+  <meta name="twitter:image:alt" content={imageAlt}>
+
   <meta name="theme-color" content="#171716">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="/fonts/affogato-400.otf" as="font" type="font/otf" crossorigin>
@@ -32,12 +190,15 @@ const ogImage = new URL(image || '/img/portrait.webp', Astro.site).href;
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap">
+  {!noindex && <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />}
   <script is:inline>
     // apply the remembered highlight colour before first paint
     try { const a = localStorage.getItem('accent'); if (a) document.documentElement.dataset.accent = a; } catch (e) {}
-    // sections start hidden and are revealed by site.ts; if that script never runs, show everything
-    document.documentElement.classList.add('rv-on');
-    setTimeout(() => { if (!window.__rv) document.documentElement.classList.remove('rv-on'); }, 2500);
+    // sections start hidden and are revealed by site.ts; skip for search crawlers or if script never runs
+    if (!navigator.webdriver && !/bot|crawl|spider|slurp|google|bing|yandex|duckduck/i.test(navigator.userAgent)) {
+      document.documentElement.classList.add('rv-on');
+      setTimeout(() => { if (!window.__rv) document.documentElement.classList.remove('rv-on'); }, 2500);
+    }
   </script>
 </head>
 <body>

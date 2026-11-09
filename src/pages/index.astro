@@ -7,8 +7,16 @@ const updates = await getUpdates();
 // featured works are picked in the editor with the Featured switch, ordered by featuredOrder
 const featured = updates.filter(u => u.data.featured).sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
 const pad = (n: number) => String(n).padStart(2, '0');
+const siteUrl = Astro.site ?? new URL('https://tolgworks.co');
+const profileJsonLd = {
+  '@type': 'ProfilePage',
+  '@id': new URL('/#profilepage', siteUrl).href,
+  url: new URL('/', siteUrl).href,
+  name: 'Tolga Aydoğdu — Architect, Interior Architect & Illustrator (tolgworks)',
+  mainEntity: { '@id': new URL('/#person', siteUrl).href },
+};
 ---
-<Base page="home">
+<Base page="home" type="profile" imageAlt="Tolga Aydoğdu in silhouette beside a projection" jsonLd={profileJsonLd}>
   <div class="hero">
     <canvas id="field" aria-hidden="true"></canvas>
     <div class="rail mono" aria-hidden="true"><span>Architecture / Narrative</span><span>Multisensory space</span><span>41.0082 N 28.9784 E</span></div>
