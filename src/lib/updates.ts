@@ -4,11 +4,21 @@ export type Update = CollectionEntry<'updates'>;
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-/** All published updates, newest first, each with its running number (oldest is 01). */
+/** All published updates, newest first, each with its running number (oldest is 01).
+ *  At most 3 featured works are kept (the 3 newest with featured: true); older ones are automatically bumped out. */
 export async function getUpdates() {
   const all = (await getCollection('updates', ({ data }) => !data.draft))
     .sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.data.title.localeCompare(b.data.title));
-  return all.map((u, i) => ({ ...u, n: String(all.length - i).padStart(2, '0') }));
+  let featuredCount = 0;
+  return all.map((u, i) => {
+    const isFeatured = u.data.featured && featuredCount < 3;
+    if (isFeatured) featuredCount++;
+    return {
+      ...u,
+      data: { ...u.data, featured: isFeatured },
+      n: String(all.length - i).padStart(2, '0'),
+    };
+  });
 }
 export type NumberedUpdate = Awaited<ReturnType<typeof getUpdates>>[number];
 

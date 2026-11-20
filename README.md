@@ -7,7 +7,7 @@ Portfolio site of Tolga Aydoğdu. Built with [Astro](https://astro.build), hoste
 Use the editor at [app.pagescms.org](https://app.pagescms.org): sign in with GitHub, open this repository, choose **Updates**, then **Add an entry**. Save, and the site rebuilds in about a minute.
 
 - The first image of an update is its cover: the hover preview on the lists and the card on Home.
-- Switch on **Featured on Home** to show it in Selected works; **Featured order** sets the order.
+- Switch on **Featured on Home** to show it in Selected works (ordered automatically by date; at most 3 are shown, bumping the oldest one out).
 - **Draft** keeps an entry saved but off the site.
 
 Each update is a Markdown file in `src/content/updates/`, so it can also be edited directly on GitHub.

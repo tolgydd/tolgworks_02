@@ -4,8 +4,8 @@ import Row from '../components/Row.astro';
 import { getUpdates, cover } from '../lib/updates';
 
 const updates = await getUpdates();
-// featured works are picked in the editor with the Featured switch, ordered by featuredOrder
-const featured = updates.filter(u => u.data.featured).sort((a, b) => a.data.featuredOrder - b.data.featuredOrder);
+// featured works are picked in the editor with the Featured switch, ordered newest first (at most 3)
+const featured = updates.filter(u => u.data.featured);
 const pad = (n: number) => String(n).padStart(2, '0');
 const siteUrl = Astro.site ?? new URL('https://tolgworks.co');
 const profileJsonLd = {
