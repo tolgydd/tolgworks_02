@@ -28,19 +28,23 @@ collaborators:
     role: Project Team
   - name: Artun İmamoğlu
     role: Project Team
-summary: HENOSIS transforms two participants’ real-time brain activity into a shared audiovisual atmosphere, exploring collective mind and continuous becoming at the 3rd Adana Architecture Festival.
+summary: HENOSIS transforms two participants’ real-time brain activity into a
+  shared audiovisual atmosphere, exploring collective mind and continuous
+  becoming at the 3rd Adana Architecture Festival.
 images:
   - src: /media/f9d711_3f08ddc93a414f4a992053e987a08952~mv2.webp
   - src: /media/f9d711_6b7e7fa44af84cc09fc32073166a9d0c~mv2.webp
   - src: /media/f9d711_d6dcde2929164ea381f300c4387aedc9~mv2.webp
-    alt: Participants silhouetted against the blue generative projections of HENOSIS at Adana Architecture Festival.
+    alt: Participants silhouetted against the blue generative projections of HENOSIS
+      at Adana Architecture Festival.
 videos:
   - url: https://www.youtube.com/watch?v=gP6hS2Mgsl8
     caption: "HENOSIS: Collective Mind and Continuous Becoming"
 links:
   - label: Original post
     url: https://www.betuluckan.com/post/henosis-collective-mind-shared-space-continuous-becoming
-featured: false
+featured: true
+featuredOrder: 1
 draft: false
 ---
 Presented at the 3rd Adana Architecture Festival at Adana Museum Complex, 15–17 October 2026, HENOSIS is an interactive spatial installation exploring collective sensing through real-time brain activity. Bringing together architecture, neuroscience and generative audiovisual systems, it asks how space can emerge through the encounter between two minds.
