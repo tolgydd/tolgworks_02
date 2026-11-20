@@ -32,8 +32,8 @@ images:
     credit: J.J. Hellerman
 videos:
   - url: https://youtu.be/xlqoaws_WN8
-featured: true
-featuredOrder: 3
+featured: false
+featuredOrder: 0
 draft: false
 ---
 Representing the collective, Ayçin Atukeren and Tolga Aydoğdu presented the projects and shared the evolving research behind our exploration of immaterial and responsive spatial environments. Presented together, AION and KHORA trace the development of this research from interactive generative environments toward bio-responsive spatial systems. While AION explores the relationship between participant, generative visuals and sound, KHORA extends this approach through real-time physiological data, allowing the participant’s changing state to become part of the spatial experience.
