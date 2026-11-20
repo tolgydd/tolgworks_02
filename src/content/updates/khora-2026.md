@@ -47,7 +47,7 @@ videos:
   - url: https://www.youtube.com/watch?v=1qa2YLRez18&t=3s
     caption: "KHORA: Space of Becoming with Mind and Body"
 featured: true
-featuredOrder: 1
+featuredOrder: 2
 draft: false
 ---
 Presented as part of the Istanbul Digital Art Festival (IDAF) 2026 under the theme RETELL, KHORA is a spatial installation that reinterprets the relationship between body, mind, and space through real-time psychophysiological data. Bringing together architecture, psychology, neuroscience, and generative design systems, the project approaches space not as a predefined and static entity, but as a living system that continuously emerges, transforms, and evolves through human experience.
